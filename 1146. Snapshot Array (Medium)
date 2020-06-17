@@ -1,0 +1,22 @@
+class SnapshotArray:
+    def __init__(self, length: int):
+        self.cur_ver = 0
+        self.snapArr = [{} for _ in range(length)]
+        
+    def set(self, index: int, val: int) -> None:
+        self.snapArr[index][self.cur_ver] = val
+        #print(self.snapArr)
+        
+    def snap(self) -> int:
+        self.cur_ver += 1
+        return self.cur_ver - 1
+    
+    def get(self, index: int, snap_id: int) -> int:
+        if snap_id in self.snapArr[index]:
+            return self.snapArr[index][snap_id]
+        last_val = 0
+        for i in range(0, self.cur_ver+1):
+            if i in self.snapArr[index]:
+                last_val = self.snapArr[index][i]
+            if i >= snap_id:break
+        return last_val
