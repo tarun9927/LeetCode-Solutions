@@ -1,0 +1,19 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def smallestFromLeaf(self, root: TreeNode) -> str:
+        self.ans=["~"]
+        def traverse(root,curr):
+            if root:
+                curr.append(chr(97+root.val))
+                traverse(root.left,curr)
+                if not root.left and not root.right:
+                    self.ans[0]=min(self.ans[0],"".join(curr)[::-1])
+                traverse(root.right,curr)
+                curr.pop()
+        traverse(root,[])
+        return "".join(self.ans[0])
