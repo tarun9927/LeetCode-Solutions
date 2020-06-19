@@ -1,0 +1,10 @@
+class Solution:
+    def smallestSubsequence(self, text: str) -> str:
+        n=len(text)
+        last,stack={text[i]:i for i in range(n)},[]
+        for i in range(n):
+            if text[i] not in stack:
+                while stack and stack[-1]>text[i] and i<last[stack[-1]]:
+                    stack.pop()
+                stack.append(text[i])
+        return "".join(stack)
