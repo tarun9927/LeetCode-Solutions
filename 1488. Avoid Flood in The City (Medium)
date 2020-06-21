@@ -1,0 +1,21 @@
+class Solution:
+    def avoidFlood(self, rains: List[int]) -> List[int]:
+        full,res,zeros={},[-1 for i in range(len(rains))],[]
+        for i in range(len(rains)):
+            if rains[i]==0:
+                zeros.append(i)
+                res[i]=1
+            elif rains[i] not in full:
+                full[rains[i]]=i
+            else:
+                if zeros:
+                    j=bisect.bisect_left(zeros,full[rains[i]])
+                    if j<len(zeros) and full[rains[i]]<=zeros[j]<=i:
+                        res[zeros[j]]=rains[i]
+                        del zeros[j]
+                        full[rains[i]]=i
+                    else:
+                        return []
+                else:
+                    return []
+        return res
