@@ -1,0 +1,15 @@
+class Solution:
+    def getFolderNames(self, names: List[str]) -> List[str]:
+        seen,res={},[]
+        for name in names:
+            if name in seen:
+                while name+"("+str(seen[name])+")" in seen:
+                    seen[name]+=1
+                seen[name+"("+str(seen[name])+")"]=1
+                res.append(name+"("+str(seen[name])+")")
+                seen[name]+=1
+            else:
+                res.append(name)
+                seen[name]=1
+        return res
+                
