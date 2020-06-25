@@ -1,0 +1,16 @@
+class Solution:
+    def shoppingOffers(self, price: List[int], special: List[List[int]], needs: List[int]) -> int:
+        def shopping(price,special,needs):
+            if tuple(needs) in seen:
+                return seen[tuple(needs)]
+            cost=0
+            for i in range(len(needs)):
+                cost+=(price[i]*needs[i])
+            for offer in special:
+                if all(needs[i]>=offer[i] for i in range(len(needs))):
+                    new_needs=[needs[i]-offer[i] for i in range(len(needs))]
+                    cost=min(cost,offer[-1]+shopping(price,special,new_needs))
+            seen[tuple(needs)]=cost
+            return cost
+        seen={}
+        return shopping(price,special,needs)
