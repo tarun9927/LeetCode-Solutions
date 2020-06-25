@@ -1,0 +1,33 @@
+class Solution:
+    def shortestBridge(self, A: List[List[int]]) -> int:
+        def traverse(i,j):
+            if 0<=i<n and 0<=j<m and A[i][j]==1:
+                A[i][j]=-1
+                queue.append([i,j,0])
+                for x, y in ((i - 1, j), (i + 1, j), (i, j - 1), (i, j + 1)):
+                    traverse(x,y)
+        n,m,queue,ans,vis,f=len(A),len(A[0]),[],float("inf"),{},False
+        for i in range(n):
+            for j in range(m):
+                if A[i][j]:
+                    traverse(i,j)
+                    f=True
+                    break
+            if f: break
+        while queue:
+            i,j,dist=queue.pop(0)
+            for k in [-1,1]:
+                ni,nj=i+k,j+k
+                if 0<=ni<n and (ni,j) not in vis:
+                    if A[ni][j]==1:
+                        ans=min(ans,dist)
+                    elif A[ni][j]==0:
+                        vis[ni,j]=True
+                        queue.append([ni,j,dist+1])
+                if 0<=nj<m and (i,nj) not in vis:
+                    if A[i][nj]==1:
+                        ans=min(ans,dist)
+                    elif A[i][nj]==0:
+                        vis[i,nj]=True
+                        queue.append([i,nj,dist+1])
+        return ans
