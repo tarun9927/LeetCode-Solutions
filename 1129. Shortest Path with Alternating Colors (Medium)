@@ -1,0 +1,32 @@
+class Solution:
+    def shortestAlternatingPaths(self, n: int, red_edges: List[List[int]], blue_edges: List[List[int]]) -> List[int]:
+        grid=[[[0,0] for _ in range(n)] for _ in range(n)]
+        for i in red_edges:grid[i[0]][i[1]]=[1,grid[i[0]][i[1]][1]+1]
+        for i in blue_edges:grid[i[0]][i[1]]=[1,grid[i[0]][i[1]][1]-1]
+        ans=[float("inf") for _ in range(n)]
+        ans[0]=0
+        vis,queue={"0,None":True},[[0,None,0]]
+        while queue:
+            u,color,dis=queue.pop(0)
+            for v in range(n):
+                col=[]
+                if grid[u][v][0]==1:
+                    if color==None:
+                        if grid[u][v][1]==0:
+                            col.extend([True,False])
+                        elif grid[u][v][1]==1:
+                            col.append(True)
+                        else:
+                            col.append(False)
+                    elif grid[u][v][1]==0:
+                        col.append(not color)
+                    elif grid[u][v][1]==1:
+                        col.append(True)
+                    else:
+                        col.append(False)
+                    for i in col:
+                        if (color==None or not color==i) and str(v)+","+str(i) not in vis:
+                            queue.append([v,i,dis+1])
+                            ans[v]=min(ans[v],dis+1)
+                            vis[str(v)+","+str(i)]=True
+        return [i if i!=float("inf") else -1 for i in ans]
