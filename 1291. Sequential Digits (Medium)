@@ -1,0 +1,28 @@
+class Solution:
+    def sequentialDigits(self, low: int, high: int) -> List[int]:
+        num,n,ans=str(low)[0],len(str(low)),[]
+        while True:
+            for i in range(1,n):
+                new=int(num[-1])+1
+                if new>9:
+                    n+=1
+                    if n>9: return []
+                    num="1"
+                    break
+                num+=str(new)
+            else:
+                break
+        while int(num)<=high:
+            if int(num)>=low:
+                ans.append(num)
+            new=int(num[-1])+1
+            if new>9:
+                n+=1
+                num=""
+                if n>9: break
+                for i in range(n):
+                    num+=str(i+1)
+            else:
+                num+=str(new)
+                num=num[1:]
+        return ans
