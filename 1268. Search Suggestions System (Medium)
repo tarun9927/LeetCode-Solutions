@@ -1,0 +1,12 @@
+class Solution:
+    def suggestedProducts(self, products: List[str], searchWord: str) -> List[List[str]]:
+        products,prefix,ans=sorted(products),"",[]
+        for c in searchWord:
+            prefix+=c
+            ind=bisect.bisect_left(products,prefix)
+            temp=[]
+            for word in products[ind:ind+3]:
+                if word.startswith(prefix):
+                    temp.append(word)
+            ans.append(temp)
+        return ans
