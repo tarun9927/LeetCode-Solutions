@@ -1,0 +1,54 @@
+######### O(1) Extra Space #########
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def rotateRight(self, head: ListNode, k: int) -> ListNode:
+        if not head: return head
+        n=0
+        temp=slow=curr=ans=head
+        while temp:
+            temp=temp.next
+            n+=1
+        if k>=n: k%=n
+        while k>0 and curr:
+            curr=curr.next
+            k-=1
+        while curr.next:
+            slow=slow.next
+            curr=curr.next
+        if slow.next:
+            ans=slow.next
+            slow.next=None
+            temp2=ans
+            while temp2.next:
+                temp2=temp2.next
+            temp2.next=head       
+        return ans
+        
+        
+######### O(1) Extra Space #########
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def rotateRight(self, head: ListNode, k: int) -> ListNode:
+        array,n=[],0
+        if not head: return head
+        while head:
+            array.append(head.val)
+            head=head.next
+            n+=1
+        if k>=n:
+            k%=n
+        array=array[n-k:]+array[:n-k]
+        ans=ListNode(array[0])
+        temp=ans
+        for i in range(1,len(array)):
+            temp.next=ListNode(array[i])
+            temp=temp.next
+        return ans
