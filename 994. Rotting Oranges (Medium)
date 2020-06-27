@@ -1,0 +1,23 @@
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        ans,n,m,queue=0,len(grid),len(grid[0]),[[]]
+        for i in range(n):
+            for j in range(m):
+                if grid[i][j]==2:
+                    queue[0].append([i,j])
+        while queue:
+            curr=queue.pop(0)
+            nextlvl,enter=[],False
+            for u in curr:
+                for ni,nj in [(u[0]+1,u[1]),(u[0]-1,u[1]),(u[0],u[1]+1),(u[0],u[1]-1)]:
+                    if 0<=ni<n and  0<=nj<m and grid[ni][nj]==1:
+                        enter=True
+                        grid[ni][nj]=2
+                        nextlvl.append([ni,nj])
+            if nextlvl: queue.append(nextlvl)
+            if enter:ans+=1
+        for i in range(n):
+            for j in range(m):
+                if grid[i][j]==1:
+                    return -1
+        return ans
