@@ -1,0 +1,21 @@
+class Solution:
+    def equationsPossible(self, equations: List[str]) -> bool:
+        def getparent(element):
+            while parent[element]!=element:
+                element=parent[element]
+            return element
+        
+        equations,n,i=sorted(equations,key=lambda x: x[1:3],reverse=True),len(equations),0
+        parent={chr(i):chr(i) for i in range(97,123)}
+        while i<n and equations[i][1:3]=="==":
+            elem1,elem2=equations[i][0],equations[i][-1]
+            if elem1!=elem2:
+                if elem1>elem2: elem1,elem2=elem2,elem1
+                parent[getparent(elem2)]=getparent(elem1)
+            i+=1
+        while i<n:
+            elem1,elem2=equations[i][0],equations[i][-1]
+            if getparent(elem1)==getparent(elem2):
+                return False
+            i+=1
+        return True
