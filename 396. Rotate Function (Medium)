@@ -1,0 +1,11 @@
+class Solution:
+    def maxRotateFunction(self, A: List[int]) -> int:
+        arrsum,prodsum,ans,n=0,0,float("-inf"),len(A)
+        for i in range(n):
+            arrsum+=A[i]
+            prodsum+=(A[i]*i)
+        ans=prodsum
+        for i in range(1,n):
+            prodsum+=arrsum-(A[-i]*n)
+            ans=max(ans,prodsum)
+        return ans
