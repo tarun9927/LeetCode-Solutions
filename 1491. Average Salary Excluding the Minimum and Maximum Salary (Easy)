@@ -1,0 +1,8 @@
+class Solution:
+    def average(self, salary: List[int]) -> float:
+        n,ans,minn,maxx=len(salary),0,float("inf"),float("-inf")
+        for i in range(n):
+            minn=min(minn,salary[i])
+            maxx=max(maxx,salary[i])
+            ans+=salary[i]
+        return (ans-minn-maxx)/(n-2)
