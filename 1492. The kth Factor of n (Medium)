@@ -1,0 +1,14 @@
+class Solution:
+    def kthFactor(self, n: int, k: int) -> int:
+        factors,i,l=[],1,0
+        while i<=(n**(0.5)):
+            if n%i==0:
+                if n/i==i:
+                    bisect.insort(factors,i)
+                    l+=1
+                else:
+                    bisect.insort(factors,i)
+                    bisect.insort(factors,n//i)
+                    l+=2
+            i+=1
+        return factors[k-1] if l>=k else -1
