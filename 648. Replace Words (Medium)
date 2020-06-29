@@ -1,0 +1,21 @@
+class Solution:
+    def replaceWords(self, dict: List[str], sentence: str) -> str:
+        def insert(tree,word):
+            for char in word:
+                if char not in tree:
+                    tree[char]={}
+                tree=tree[char]
+            tree["*"]=True
+        dict,trie,sentence={i:True for i in dict},{},sentence.split(" ")
+        for word in dict.keys():
+            insert(trie,word)
+        for i in range(len(sentence)):
+            tree,curr=trie,""
+            for j in range(len(sentence[i])):
+                if sentence[i][j] in tree:
+                    tree=tree[sentence[i][j]]
+                    curr+=sentence[i][j]
+                else:break
+                if curr in dict or tree==True:break
+            if curr in dict: sentence[i]=curr
+        return " ".join(sentence)
