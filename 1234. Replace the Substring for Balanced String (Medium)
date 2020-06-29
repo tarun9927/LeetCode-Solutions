@@ -1,0 +1,11 @@
+class Solution:
+    def balancedString(self, s: str) -> int:
+        counts,n,r,l,ans=collections.Counter(s),len(s),0,0,float("inf")
+        while r<n:
+            counts[s[r]]-=1
+            while l<n and all(counts[c]<=(n//4) for c in "QWER"):
+                ans=min(ans,r-l+1)
+                counts[s[l]]+=1
+                l+=1
+            r+=1
+        return ans
