@@ -1,0 +1,20 @@
+class Solution:
+    def isRobotBounded(self, instructions: str) -> bool:
+        vis,curr,direc={},[0,0],"N"
+        for i in instructions:
+            if i=="G":
+                if direc=="N":curr[1]+=1
+                elif direc=="W":curr[0]-=1
+                elif direc=="S":curr[1]-=1
+                else: curr[0]+=1
+            elif i=="L":
+                if direc=="N":direc="W"
+                elif direc=="W":direc="S"
+                elif direc=="S":direc="E"
+                else: direc="N"
+            else:
+                if direc=="N":direc="E"
+                elif direc=="W":direc="N"
+                elif direc=="S":direc="W"
+                else: direc="S"
+        return direc!="N" or curr==[0,0]
