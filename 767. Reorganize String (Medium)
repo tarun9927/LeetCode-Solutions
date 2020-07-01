@@ -1,0 +1,17 @@
+class Solution:
+    def reorganizeString(self, S: str) -> str:
+        heap,ans=[]," "
+        for i in collections.Counter(S).items():
+            heapq.heappush(heap,(-i[1],i[0]))
+        while heap:
+            i=0
+            while i<len(heap) and heap[i][1]==ans[-1]:
+                i+=1
+            if i<len(heap):
+                curr=list(heap.pop(i))
+                ans+=curr[1]
+                curr[0]+=1
+                if curr[0]<0:heapq.heappush(heap,tuple(curr))
+            else:
+                return ""
+        return ans[1:]
