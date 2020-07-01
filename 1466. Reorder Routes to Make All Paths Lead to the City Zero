@@ -1,38 +1,21 @@
-#### BFS Solution | TLE ####
+#### BFS Solution | Accepted ####
 class Solution:
     def minReorder(self, n: int, connections: List[List[int]]) -> int:
-        grid,inc,vis,ans=[[0 for _ in range(n)] for _ in range(n)],{0:[]},{},0
-        for conn in connections:
-            if conn[1] not in inc:
-                inc[conn[1]]=[]
-            inc[conn[1]].append(conn[0])
-            grid[conn[0]][conn[1]]=1
-        for i in inc[0]:
-            if grid[0][i]==0:
-                grid[0][i]=1
-                grid[i][0]=0
-                ans+=1
-        total=0
-        key=[float("inf")]*n
-        key[0]=0
-        queue=[[0,0]]
+        edges={(u,v) for u,v in connections}
+        visited,neighbors,ans={0:True},{i:[] for i in range(n)},0
+        for u,v in edges:
+            neighbors[u].append(v)
+            neighbors[v].append(u)
+        queue=[0]
         while queue:
-            u,dis=queue.pop(0)
-            if u not in vis:
-                vis[u]=True
-                total+=1
-            for v in range(n):
-                if v in vis: continue
-                if grid[u][v]==1:
-                    key[v]=min(key[v],dis+1)
-                    queue.append([v,dis+1])
-                    if v in inc:
-                        for i in inc[v]:
-                            if i not in vis:
-                                grid[v][i]=1
-                                grid[i][v]=0
-                                ans+=1
-        return total-1-ans
+            u=queue.pop(0)
+            for v in neighbors[u]:
+                if v not in visited:
+                    if (v,u) not in edges:
+                        ans+=1
+                    visited[v]=True
+                    queue.append(v)
+        return ans
         
         
         
