@@ -1,0 +1,8 @@
+class Solution:
+    def reorderedPowerOf2(self, N: int) -> bool:
+        counts,n,power=collections.Counter(str(N)),len(str(N)),1
+        while len(str(power))<=n:
+            if counts==collections.Counter(str(power)) and len(str(power))==n:
+                return True
+            power*=2
+        return False
