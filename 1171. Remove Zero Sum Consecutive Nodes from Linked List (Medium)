@@ -1,0 +1,22 @@
+class Solution:
+    def removeZeroSumSublists(self, head: ListNode) -> ListNode:
+        dummy=ListNode(None)
+        dummy.next=head
+        pres={0:dummy}
+        pre,node=0,head
+        while node:
+            nex=node.next
+            pre+=node.val
+            if pre in pres:
+                temp=pres[pre]
+                todelete=temp.next
+                temp.next=node.next
+                tpre=pre
+                while todelete.next!=temp.next:
+                    tpre+=todelete.val
+                    del pres[tpre]
+                    todelete=todelete.next
+            else:
+                pres[pre]=node
+            node=nex
+        return dummy.next
