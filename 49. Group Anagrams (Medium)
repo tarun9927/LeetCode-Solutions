@@ -1,0 +1,10 @@
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        sets={}
+        for word in strs:
+            key=tuple(sorted(list(word)))
+            if key in sets:
+                sets[key].append(word)
+            else:
+                sets[key]=[word]
+        return sets.values()
