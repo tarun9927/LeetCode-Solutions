@@ -1,0 +1,15 @@
+class Solution:
+    def hIndex(self, citations: List[int]) -> int:
+        n=len(citations)
+        buckets={i:0 for i in range(n+1)}
+        for c in citations:
+            if c>=n:
+                buckets[n]+=1
+            else:
+                buckets[c]+=1
+        curr=0
+        for i in range(n,-1,-1):
+            curr+=buckets[i]
+            if curr>=i:
+                return i
+        return 0
