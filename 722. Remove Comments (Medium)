@@ -1,0 +1,21 @@
+class Solution:
+    def removeComments(self, course: List[str]) -> List[str]:
+        ans,valid=[],True
+        for i in range(len(course)):
+            if valid: curr=""
+            j=0
+            while j<len(course[i]):
+                if course[i][j:j+2]=="/*" and valid:
+                    valid=False
+                    j+=1
+                elif course[i][j:j+2]=="*/" and not valid:
+                    valid=True
+                    j+=1
+                elif course[i][j:j+2]=="//" and valid:
+                    break
+                elif valid:
+                    curr+=course[i][j]
+                j+=1 
+            if curr!="" and valid:
+                ans.append(curr)
+        return ans
