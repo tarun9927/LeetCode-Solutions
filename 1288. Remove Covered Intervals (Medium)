@@ -1,0 +1,11 @@
+class Solution:
+    def removeCoveredIntervals(self, intervals: List[List[int]]) -> int:
+        intervals=sorted(intervals,key=lambda x:(x[0],-(x[1]-x[0])))
+        ans=[]
+        for i in intervals:
+            for s,e in ans:
+                if i[0]>=s and i[1]<=e:
+                    break
+            else:
+                ans.append(i)
+        return len(ans)
