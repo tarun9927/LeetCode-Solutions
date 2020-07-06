@@ -1,0 +1,10 @@
+class Solution:
+    def getPermutation(self, n: int, k: int) -> str:
+        num,i,ans,k=[str(j+1) for j in range(n)],1,[],k-1
+        while num:
+            fact=math.factorial(n-i)
+            ind=k//fact
+            ans.append(num.pop(ind))
+            k-=(ind)*fact
+            i+=1
+        return "".join(ans)
