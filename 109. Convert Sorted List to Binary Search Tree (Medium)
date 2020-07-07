@@ -1,0 +1,71 @@
+######Converting LL into array#######
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def sortedListToBST(self, head: ListNode) -> TreeNode:
+        nums=[]
+        while head:
+            nums.append(head.val)
+            head=head.next
+        def set_elems(nums):
+            if nums:
+                ind=len(nums)//2
+                node=TreeNode(nums[ind])
+                node.left=set_elems(nums[:ind])
+                node.right=set_elems(nums[ind+1:])
+                return node
+        return set_elems(nums)
+ 
+
+
+######Without Coverting LL##########
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def sortedListToBST(self, head: ListNode) -> TreeNode:
+        def divide(head):
+            if not head:
+                return None,None,None
+            if not head.next:
+                return head,None,None
+            slow=fast=head
+            while fast and fast.next and fast.next.next:
+                fast=fast.next
+                if fast.next.next: slow=slow.next
+                fast=fast.next
+            right=slow.next if slow else None
+            if slow: slow.next=None
+            left=head
+            root=right
+            if right:right=right.next
+            if root: root.next=None
+            return root,left,right
+        
+        def set_elems(root,left,right):
+            if root:
+                node=TreeNode(root.val)
+                lr,ll,lri=divide(left)
+                rr,rl,rri=divide(right)
+                node.left=set_elems(lr,ll,lri)
+                node.right=set_elems(rr,rl,rri)
+                return node
+        root,left,right=divide(head)
+        return set_elems(root,left,right)
