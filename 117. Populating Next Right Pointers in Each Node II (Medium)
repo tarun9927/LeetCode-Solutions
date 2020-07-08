@@ -1,0 +1,44 @@
+class Solution:
+    def connect(self, head: 'Node') -> 'Node':
+        def find_child(node):
+            while node:
+                if node.left:
+                    return node.left,node,True
+                elif node.right:
+                    return node.right,node,False
+                else:
+                    node=node.next
+            return None,node,None
+        
+        def find_next(child,node,left_child):
+            while node:
+                if left_child:
+                    if node.right:
+                        child.next=node.right
+                        return node.right,node,False
+                    else:
+                        left_child=False
+                        node=node.next
+                else:
+                    while node:
+                        if (node.left and child==node.left) or (node.right and child==node.right):
+                            node=node.next
+                        else:
+                            if node.left:
+                                child.next=node.left
+                                return node.left,node,True
+                            elif node.right:
+                                child.next=node.right
+                                return node.right,node,False
+                            else:
+                                node=node.next
+            return None,node,None
+        ans=head
+        while head:
+            nex,head,is_left_child=find_child(head)
+            if not nex: break
+            child=nex
+            while child:
+                child,head,is_left_child=find_next(child,head,is_left_child)
+            head=nex
+        return ans
