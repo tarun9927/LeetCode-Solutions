@@ -1,0 +1,22 @@
+class Solution:
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+        l,r,n=0,0,len(gas)
+        while l<n:
+            if gas[l]>=cost[l]:   
+                r=l+1
+                if r==n: r%=n
+                fuel=gas[l]-cost[l]
+                while r!=l:
+                    fuel+=gas[r]
+                    fuel-=cost[r]
+                    if fuel<0:break
+                    r+=1
+                    if r==n: r%=n
+                if r==l: return l
+                if r>l:
+                    l=r
+                else:
+                    break
+            else:
+                l+=1
+        return -1
