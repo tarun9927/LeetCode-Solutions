@@ -1,0 +1,36 @@
+##### Recursive Solution #####
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def preorderTraversal(self, root: TreeNode) -> List[int]:
+        def traverse(root):
+            if root:
+                nums.append(root.val)
+                traverse(root.left)
+                traverse(root.right)
+        nums=[]
+        traverse(root)
+        return nums
+
+
+
+##### Iterative Solution #####
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def preorderTraversal(self, root: TreeNode) -> List[int]:
+        stack,ans=[root],[]
+        while stack:
+            node=stack.pop()
+            if node:
+                ans.append(node.val)
+                stack.extend([node.right,node.left])
+        return ans
