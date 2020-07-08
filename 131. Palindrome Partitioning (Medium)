@@ -1,0 +1,13 @@
+class Solution:
+    def partition(self, s: str) -> List[List[str]]:
+        ans,n=[],len(s)
+        def traverse(ind,curr_array,curr):
+            if curr==curr[::-1]:
+                if ind>=n:
+                    ans.append(curr_array)
+                else:
+                    for i in range(ind,n):
+                        string=s[ind:i+1]
+                        traverse(i+1,curr_array+[string],string)
+        traverse(0,[],"")
+        return ans
