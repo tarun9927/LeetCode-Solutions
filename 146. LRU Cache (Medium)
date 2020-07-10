@@ -1,0 +1,75 @@
+#### List Solution ####
+class LRUCache:
+
+    def __init__(self, capacity: int):
+        self.cache=[]
+        self.capacity=capacity
+        self.size=0
+        
+    def _find(self,key):
+        for i in range(self.size):
+            if self.cache[i][0]==key:
+                return i
+        return -1
+    
+    def get(self, key: int) -> int:
+        index=self._find(key)
+        if index==-1: return -1
+        key,value=self.cache.pop(index)
+        self.cache.append([key,value])
+        return value
+    
+    def put(self, key: int, value: int) -> None:
+        index=self._find(key)
+        if index==-1:
+            if self.size<self.capacity:
+                self.size+=1
+            else:
+                self.cache.pop(0)
+            self.cache.append([key,value])
+        else:
+            self.cache.pop(index)
+            self.cache.append([key,value])
+
+
+# Your LRUCache object will be instantiated and called as such:
+# obj = LRUCache(capacity)
+# param_1 = obj.get(key)
+# obj.put(key,value)
+
+
+
+#### Ordered Dict Solution####
+class LRUCache:
+
+    def __init__(self, capacity: int):
+        self.cache=collections.OrderedDict()
+        self.size=0
+        self.capacity=capacity
+        
+    def get(self, key: int) -> int:
+        if key in self.cache:
+            self.cache.move_to_end(key)
+            return self.cache[key]
+        return -1
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.cache:
+            self.cache[key]=value
+            self.cache.move_to_end(key)
+        else:
+            if self.size<self.capacity:
+                self.cache[key]=value
+                self.cache.move_to_end(key)
+                self.size+=1
+            else:
+                self.cache.popitem(last=False)
+                self.cache[key]=value
+                
+                
+
+
+# Your LRUCache object will be instantiated and called as such:
+# obj = LRUCache(capacity)
+# param_1 = obj.get(key)
+# obj.put(key,value)
