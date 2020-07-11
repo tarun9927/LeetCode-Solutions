@@ -1,0 +1,40 @@
+class WordDictionary:
+
+    def __init__(self):
+        self.trie={}
+        
+
+    def addWord(self, word: str) -> None:
+        n,curr=len(word),self.trie
+        def helper(ind,curr):
+            if ind==n:
+                if "*" not in curr:
+                    curr["*"]=True
+                return
+            else:
+                if word[ind] not in curr:
+                    curr[word[ind]]={}
+                helper(ind+1,curr[word[ind]])
+        helper(0,curr)
+        
+
+    def search(self, word: str) -> bool:
+        n=len(word)
+        def find(ind,curr):
+            if type(curr)==bool: return False
+            if ind==n:
+                return "*" in curr
+            else:
+                if word[ind]!=".":
+                    if word[ind] not in curr:
+                        return False
+                    else:
+                        return find(ind+1,curr[word[ind]])
+                else:
+                    return any(find(ind+1,curr[i]) for i in curr)
+        return find(0,self.trie)
+
+# Your WordDictionary object will be instantiated and called as such:
+# obj = WordDictionary()
+# obj.addWord(word)
+# param_2 = obj.search(word)
