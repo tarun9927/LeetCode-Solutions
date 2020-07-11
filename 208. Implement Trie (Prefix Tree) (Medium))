@@ -1,0 +1,53 @@
+class Trie:
+
+    def __init__(self):
+        self.trie={}
+        
+
+    def insert(self, word: str) -> None:
+        n,curr=len(word),self.trie
+        def helper(ind,curr):
+            if ind==n:
+                if "*" not in curr:
+                    curr["*"]=True
+                return
+            else:
+                if word[ind] not in curr:
+                    curr[word[ind]]={}
+                helper(ind+1,curr[word[ind]])
+        helper(0,curr)
+        
+
+    def search(self, word: str) -> bool:
+        n=len(word)
+        def helper(ind,curr):
+            if ind==n:
+                return "*" in curr
+            else:
+                if word[ind] not in curr:
+                    return False
+                else:
+                    return helper(ind+1,curr[word[ind]])
+        return helper(0,self.trie)
+                    
+        
+
+    def startsWith(self, word: str) -> bool:
+        n=len(word)
+        def helper(ind,curr):
+            if ind==n:
+                return True
+            else:
+                if word[ind] not in curr:
+                    return False
+                else:
+                    return helper(ind+1,curr[word[ind]])
+        return helper(0,self.trie)
+        
+
+
+# Your Trie object will be instantiated and called as such:
+# obj = Trie()
+# obj.insert(word)
+# param_2 = obj.search(word)
+# param_3 = obj.startsWith(prefix)
