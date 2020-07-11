@@ -1,0 +1,51 @@
+####### Quick Sort #######
+class Solution:
+    def largestNumber(self, nums: List[int]) -> str:
+        def partition(l,r):
+            current=l
+            while l<r:
+                if nums[l]+nums[r]>nums[r]+nums[l]:
+                    nums[l],nums[current]=nums[current],nums[l]
+                    current+=1
+                l+=1
+            nums[r],nums[current]=nums[current],nums[r]
+            return current
+        
+        def quicksort(l,r):
+            if l>=r: return
+            pivot=partition(l,r)
+            quicksort(l,pivot-1)
+            quicksort(pivot+1,r)
+        
+        nums=[str(i) for i in nums]
+        quicksort(0,len(nums)-1)
+        return "".join(nums) if nums[0]!="0" else "0"
+
+####### Bubble Sort #######
+class Solution:
+    def largestNumber(self, nums: List[int]) -> str:
+        current_max,ans="",""
+        nums=[str(i) for i in nums]
+        def compare(num1,num2):
+            return num1+num2>num2+num1
+        while nums:
+            for i in nums:
+                if not current_max:
+                    current_max=i
+                else:
+                    if compare(i,current_max):
+                        current_max=i
+            ans+=current_max
+            nums.remove(current_max)
+            current_max=""
+        return ans if not ans.startswith("0") else "0"
+
+####### Comparator #######
+class Solution:
+    def largestNumber(self, nums: List[int]) -> str:
+        class comparator(str):
+            def __lt__(self,number):
+                return number+self>self+number
+        nums=[str(i) for i in nums]
+        nums.sort(key=comparator,reverse=True)
+        return "".join(nums) if nums[0]!="0" else "0"
