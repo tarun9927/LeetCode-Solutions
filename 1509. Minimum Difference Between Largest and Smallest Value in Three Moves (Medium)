@@ -1,0 +1,39 @@
+class Solution:
+    def minDifference(self, numss: List[int]) -> int:
+        n=len(numss)
+        if n<=3: return 0
+        nums,minn=[float("-inf"),float("-inf"),float("-inf"),float("-inf")],float("inf")
+        nums2=[float("inf"),float("inf"),float("inf"),float("inf")]
+        maxx=float("-inf")
+        for i in numss:
+            minn=min(minn,i)
+            maxx=max(maxx,i)
+            if nums[0]<i:
+                nums[3]=nums[2]
+                nums[2]=nums[1]
+                nums[1]=nums[0]
+                nums[0]=i
+            elif nums[1]<i:
+                nums[3]=nums[2]
+                nums[2]=nums[1]
+                nums[1]=i
+            elif nums[2]<i:
+                nums[3]=nums[2]
+                nums[2]=i
+            elif nums[3]<i:
+                nums[3]=i
+            if nums2[0]>i:
+                nums2[3]=nums2[2]
+                nums2[2]=nums2[1]
+                nums2[1]=nums2[0]
+                nums2[0]=i
+            elif nums2[1]>i:
+                nums2[3]=nums2[2]
+                nums2[2]=nums2[1]
+                nums2[1]=i
+            elif nums2[2]>i:
+                nums2[3]=nums2[2]
+                nums2[2]=i
+            elif nums2[3]>i:
+                nums2[3]=i
+        return min(nums[3]-nums2[0],nums[0]-nums2[3],nums[1]-nums2[2],nums[2]-nums2[1])
