@@ -1,0 +1,16 @@
+class Solution:
+    def maxProbability(self, n: int, edges: List[List[int]], succProb: List[float], start: int, end: int) -> float:
+        graph={i:[] for i in range(n)}
+        for i in range(len(edges)):
+            graph[edges[i][0]].append([edges[i][1],succProb[i]])
+            graph[edges[i][1]].append([edges[i][0],succProb[i]])
+        distances=[0.0 for _ in range(n)]
+        distances[start]=1
+        queue,vis=[start],{}
+        while queue:
+            u=queue.pop(0)
+            for v,dist in graph[u]:
+                if distances[v]<distances[u]*dist:
+                    distances[v]=distances[u]*dist
+                    queue.append(v)
+        return distances[end]
