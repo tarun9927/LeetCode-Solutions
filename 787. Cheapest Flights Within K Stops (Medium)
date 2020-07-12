@@ -1,0 +1,18 @@
+class Solution:
+    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, K: int) -> int:
+        graph={i:[] for i in range(n)}
+        for i in range(len(flights)):
+            graph[flights[i][0]].append([flights[i][1],flights[i][2]])
+        prices=[float("inf") for _ in range(n)]
+        queue=[[src,0,0]]
+        prices[src]=0
+        while queue:
+            u,stops,price=queue.pop(0)
+            prices[u]=min(prices[u],price)
+            if u==dst: continue
+            for v,price in graph[u]:
+                if stops==K and v==dst and prices[v]>price+prices[u]:
+                    queue.append([v,stops,price+prices[u]])
+                elif stops+1<=K and prices[v]>price+prices[u]:
+                    queue.append([v,stops+1,price+prices[u]])
+        return prices[dst] if prices[dst]!=float("inf") else -1
