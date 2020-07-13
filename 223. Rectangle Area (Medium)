@@ -1,0 +1,7 @@
+class Solution:
+    def computeArea(self, a: int, b: int, c: int, d: int, e: int, f: int, g: int, h: int) -> int:
+        area=((h-f)*(g-e))+((d-b)*(c-a))
+        w = min(c,g)-max(a,e)
+        h = min(d, h)-max(b,f)
+        if w>0 and h>0: area-=(w*h)
+        return area
