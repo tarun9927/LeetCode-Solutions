@@ -1,0 +1,20 @@
+class Solution:
+    def evaluate(self,num1,num2,op):
+        if op=="+":
+            return num1+num2
+        elif op=="-":
+            return num1-num2
+        return num1*num2
+    
+    def diffWaysToCompute(self, input: str) -> List[int]:
+        if input.isdigit():
+            return [int(input)]
+        ans=[]
+        for i in range(len(input)):
+            if input[i] in "+-*":
+                left=self.diffWaysToCompute(input[:i])
+                right=self.diffWaysToCompute(input[i+1:])
+                for num1 in left:
+                    for num2 in right:
+                        ans.append(self.evaluate(num1,num2,input[i]))
+        return ans
