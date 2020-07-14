@@ -1,0 +1,37 @@
+###### Iterative Solution ######
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def kthSmallest(self, root: TreeNode, k: int) -> int:
+        stack=[]
+        while k>0:
+            while root:
+                stack.append(root)
+                root=root.left
+            root=stack.pop()
+            k-=1
+            if not k: return root.val
+            root=root.right
+
+
+###### Recursive Solution ######
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def kthSmallest(self, root: TreeNode, k: int) -> int:
+        ans=[]
+        def traverse(root):
+            if root and len(ans)<k:
+                traverse(root.left)
+                ans.append(root.val)
+                traverse(root.right)
+        traverse(root)
+        return ans[k-1]
