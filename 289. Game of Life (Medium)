@@ -1,0 +1,29 @@
+class Solution:
+    def gameOfLife(self, board: List[List[int]]) -> None:
+        def check_neighbors(i,j):
+            count=0
+            for k in [1,-1]:
+                if 0<=i+k<n and (board[i+k][j]==1 or board[i+k][j]=="*"):
+                    count+=1
+                if 0<=j+k<m and (board[i][j+k]==1 or board[i][j+k]=="*"):
+                    count+=1
+                if 0<=j+k<m  and 0<=i+k<n and (board[i+k][j+k]==1 or board[i+k][j+k]=="*"):
+                    count+=1
+                if 0<=j-k<m  and 0<=i+k<n and (board[i+k][j-k]==1 or board[i+k][j-k]=="*"):
+                    count+=1
+            return count
+        if not board : pass
+        n,m=len(board),len(board[0])
+        for i in range(n):
+            for j in range(m):
+                live_neighbors=check_neighbors(i,j)
+                if board[i][j]==1 and (live_neighbors<2 or live_neighbors>3):
+                    board[i][j]="*"
+                elif board[i][j]==0 and live_neighbors==3:
+                    board[i][j]="#"
+        for i in range(n):
+            for j in range(m):
+                if board[i][j]=="*":
+                    board[i][j]=0
+                elif board[i][j]=="#":
+                    board[i][j]=1
