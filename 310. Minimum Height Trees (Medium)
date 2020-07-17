@@ -10,20 +10,15 @@ class Solution:
         queue,ans=[],[]
         vis={}
         for i in indegree:
-            if indegree[i]==0:
-                ans.append(i)
+            if indegree[i]==0: ans.append(i)
             if indegree[i]==1:
                 queue.append(i)
                 indegree[i]-=1
         while queue:
             temp=set()
-            temp2=[]
             for u in queue:
                 if u in vis: continue
                 vis[u]=True
-                temp2.append(u)
-            queue=temp2
-            for u in queue:
                 for v in graph[u]:
                     if v not in vis:
                         indegree[v]-=1
