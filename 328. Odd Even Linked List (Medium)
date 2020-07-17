@@ -1,0 +1,51 @@
+####### O(n/2) Space Solution #######
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def oddEvenList(self, head: ListNode) -> ListNode:
+        evenvals=[]
+        temp=ans=head
+        n=0
+        while head:
+            if n%2==1:
+                evenvals.append(head.val)
+            else:
+                temp.val=head.val
+                temp=temp.next
+            n+=1
+            head=head.next
+        for i in evenvals:
+            temp.val=i
+            temp=temp.next
+        return ans
+
+
+####### O(1) Space Solution #######
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def oddEvenList(self, head: ListNode) -> ListNode:
+        if not head or not head.next: return head
+        odd_head,even_head,ans=head,head.next,head
+        list2=even_head
+        head=even_head.next
+        n=0
+        while head:
+            odd,even=head,None
+            if head.next:
+                even=head.next
+                head=even.next
+            else:
+                head=even
+            odd_head.next=odd
+            even_head.next=even
+            odd_head=odd_head.next
+            if head: even_head=even_head.next
+        odd_head.next=list2
+        return ans
