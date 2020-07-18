@@ -1,0 +1,14 @@
+class Solution:
+    def findItinerary(self, tickets: List[List[str]]) -> List[str]:
+        graph=collections.defaultdict(list)
+        for edge in tickets:
+            graph[edge[0]].append(edge[1])
+        for i in graph:
+            graph[i].sort(reverse=True)
+        ans=[]
+        def visit(current):
+            while graph[current]:
+                visit(graph[current].pop())
+            ans.append(current)
+        visit("JFK")
+        return ans[::-1]
