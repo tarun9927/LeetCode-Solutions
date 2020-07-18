@@ -1,0 +1,12 @@
+class Solution:
+    def countBits(self, num: int) -> List[int]:
+        dp=[0,1]
+        if num<=1: return dp[:num+1]
+        rng,curr=2,0
+        for n in range(2,num+1):
+            if curr==rng:
+                rng*=2
+                curr=0
+            dp.append(dp[curr]+1)
+            curr+=1
+        return dp
