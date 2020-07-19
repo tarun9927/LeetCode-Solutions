@@ -1,0 +1,46 @@
+class Twitter:
+
+    def __init__(self):
+        self.tweets=[]
+        self.users={}
+        
+
+    def postTweet(self, userID: int, tweetID: int) -> None:
+        if userID not in self.users:
+            self.users[userID]={"follows":{}}
+        self.tweets.append([userID,tweetID])
+
+    def getNewsFeed(self, userID: int) -> List[int]:
+        ans,n,i=[],0,len(self.tweets)-1
+        if userID  not in self.users:
+            self.users[userID]={"follows":{}}
+        while n<10 and i>=0:
+            if self.tweets[i][0]==userID or self.tweets[i][0] in self.users[userID]["follows"]:
+                ans.append(self.tweets[i][1])
+                n+=1
+            i-=1
+        return ans
+
+    def follow(self, followerID: int, followeeID: int) -> None:
+        if followerID  not in self.users:
+            self.users[followerID]={"follows":{}}
+        if followeeID not in self.users:
+            self.users[followeeID]={"follows":{}}
+        if followeeID not in self.users[followerID]["follows"]:
+            self.users[followerID]["follows"][followeeID]=True
+        
+        
+
+    def unfollow(self, followerID: int, followeeID: int) -> None:
+        if followerID in self.users and followeeID in self.users:
+            if followeeID in self.users[followerID]["follows"]:
+                del self.users[followerID]["follows"][followeeID]
+        
+
+
+# Your Twitter object will be instantiated and called as such:
+# obj = Twitter()
+# obj.postTweet(userId,tweetId)
+# param_2 = obj.getNewsFeed(userId)
+# obj.follow(followerId,followeeId)
+# obj.unfollow(followerId,followeeId)
