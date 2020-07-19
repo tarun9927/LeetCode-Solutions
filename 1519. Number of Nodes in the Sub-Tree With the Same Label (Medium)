@@ -1,0 +1,17 @@
+class Solution:
+    def countSubTrees(self, n: int, edges: List[List[int]], labels: str) -> List[int]:
+        graph,ans,seen={i:[] for i in range(n)},[0 for _ in range(n)],{}
+        for edge in edges:
+            graph[edge[0]].append(edge[1])
+            graph[edge[1]].append(edge[0])
+        def dfs(root):
+            counts=collections.Counter()
+            if root not in seen:
+                seen[root]=True
+                counts[labels[root]]+=1
+                for child in graph[root]:
+                    counts+=dfs(child)
+                ans[root]=counts[labels[root]]
+            return counts
+        dfs(0)
+        return ans
