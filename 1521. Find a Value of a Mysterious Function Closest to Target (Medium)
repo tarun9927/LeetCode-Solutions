@@ -1,0 +1,13 @@
+class Solution:
+    def closestToTarget(self, arr: List[int], target: int) -> int:
+        n,ans=len(arr),float("inf")
+        for i in range(n):
+            and_sum=arr[i]
+            for j in range(i,n):
+                and_sum&=arr[j]
+                ans=min(ans,abs(and_sum-target))
+                if and_sum<=target:
+                    break
+            if and_sum>target:
+                break
+        return ans
