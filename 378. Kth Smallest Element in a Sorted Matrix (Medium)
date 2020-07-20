@@ -1,0 +1,43 @@
+#### Brute Force Solution ####
+class Solution:
+    def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
+        if k==0: return matrix[0][0]
+        n,m=len(matrix),len(matrix[0])
+        i,j,k=0,m-1,k-1
+        def count_smaller(row,col):
+            count=0
+            for i in range(row):
+                for j in range(col+1,m):
+                    if matrix[i][j]<=matrix[row][col]:
+                        count+=1
+                    else:
+                        break
+            for j in range(col+1):
+                for i in range(row+1,n):
+                    if matrix[i][j]<matrix[row][col]:
+                        count+=1
+                    else:
+                        break
+            return count
+        while 0<=i<n and 0<=j<m:
+            smaller=(i*(j+1))+j
+            smaller+=count_smaller(i,j)
+            if smaller==k:
+                return matrix[i][j]
+            elif smaller<k:
+                i+=1
+            else:
+                j-=1
+
+
+######## Heap Solution #######
+class Solution:
+    def kthSmallest(self, matrix: List[List[int]], k: int) -> int:
+        heap,n,m=[],len(matrix),len(matrix[0])
+        for i in range(n):
+            heapq.heappush(heap,[matrix[i][0],i,0])
+        for _ in range(k-1):
+            _,i,j=heapq.heappop(heap)
+            if j+1>=m: continue
+            heapq.heappush(heap,[matrix[i][j+1],i,j+1])
+        return heapq.heappop(heap)[0]
