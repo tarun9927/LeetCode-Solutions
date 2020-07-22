@@ -1,0 +1,12 @@
+class Solution:
+    def lengthLongestPath(self, input: str) -> int:
+        input,ans=input.splitlines(),float("-inf")
+        paths={0:0}
+        for add in input:
+            name=add.lstrip("\t")
+            depth=len(add)-len(name)
+            if "." in name:
+                ans=max(ans,paths[depth]+len(name))
+            else:
+                paths[depth+1]=paths[depth]+len(name)+1
+        return ans if ans!=float("-inf") else 0
