@@ -1,0 +1,42 @@
+#### Quick Sort (TLE) ####
+class Solution:
+    def lexicalOrder(self, n: int) -> List[int]:
+        ans=[str(num) for num in range(1,n+1)]
+        def compare(num,pivot):
+            length,ind=min(len(num),len(pivot)),0
+            while ind<length and num[ind]==pivot[ind]:
+                ind+=1
+            if ind==len(pivot)==len(num) or ind==len(pivot):
+                return False
+            elif ind==len(num):
+                return True
+            return num[ind]<pivot[ind]
+        def quicksort(l,r):
+            if l<r:
+                pivot=partition(l,r)
+                quicksort(l,pivot-1)
+                quicksort(pivot+1,r)
+        def partition(l,r):
+            pivot=ans[r]
+            low=l-1
+            for i in range(l,r):
+                if compare(ans[i],pivot):
+                    low+=1
+                    ans[i],ans[low]=ans[low],ans[i]
+            ans[low+1],ans[r]=ans[r],ans[low+1]
+            return low+1
+        quicksort(0,n-1)
+        return ans
+
+####  DFS (Accepted)  ####
+class Solution:
+    def lexicalOrder(self, n: int) -> List[int]:
+        ans=[]
+        def dfs(number):
+            if int(number)<=n:
+                ans.append(number)
+                for i in range(10):
+                    dfs(number+str(i))
+        for i in range(1,10):
+            dfs(str(i))
+        return ans
