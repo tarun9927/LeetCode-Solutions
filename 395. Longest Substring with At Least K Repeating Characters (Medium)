@@ -1,0 +1,25 @@
+#### Recursive Version ####
+
+class Solution:
+    def longestSubstring(self, s: str, k: int) -> int:
+        if not s: return 0
+        least_count_char=min(set(s),key=s.count)
+        if s.count(least_count_char)>=k: return len(s)
+        return max(self.longestSubstring(i,k) for i in s.split(least_count_char))
+
+#### Iterative Version ####
+
+class Solution:
+    def longestSubstring(self, s: str, k: int) -> int:
+        queue,ans=[],0
+        if s: queue.append(s)
+        while queue:
+            s=queue.pop(0)
+            least_count_char=min(set(s),key=s.count)
+            if s.count(least_count_char)>=k:
+                ans=max(ans,len(s))
+            else:
+                for new_string in s.split(least_count_char):
+                    if new_string:
+                        queue.append(new_string)
+        return ans
