@@ -1,0 +1,28 @@
+class Solution:
+    def calcEquation(self, equations: List[List[str]], values: List[float], queries: List[List[str]]) -> List[float]:
+        graph,ans={},[]
+        def find_ans(current,destination,value,visited):
+            if current not in visited:
+                visited[current]=True
+                if current==destination:
+                    self.value=value
+                else:
+                    for nex in graph[current]:
+                        find_ans(nex,destination,value*graph[current][nex],visited)
+        for i in range(len(values)):
+            if equations[i][0] not in graph: graph[equations[i][0]]={}
+            if equations[i][1] not in graph: graph[equations[i][1]]={}
+            graph[equations[i][0]][equations[i][1]]=values[i]
+            graph[equations[i][1]][equations[i][0]]=1/values[i]
+        for query in queries:
+            if query[0] not in graph or query[1] not in graph:
+                ans.append(-1.0)
+            elif query[0]==query[1]:
+                ans.append(1.0)
+            elif query[1] in graph[query[0]]:
+                ans.append(graph[query[0]][query[1]])
+            else:
+                root,self.value=query[0],-1.0
+                find_ans(query[0],query[1],1.0,{})
+                ans.append(self.value)
+        return ans
