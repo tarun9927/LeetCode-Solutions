@@ -1,0 +1,25 @@
+class Solution:
+    def decodeString(self, s: str) -> str:
+        stack,times,string,ans=[],"","",""
+        for i in s:
+            if i.isdigit():
+                times+=i
+            elif i=="[":
+                stack.append([times,""])
+                times=""
+            elif i.isalpha():
+                if stack:
+                    stack[-1][1]+=i
+                else:
+                    ans+=i
+            else:
+                t,s=stack.pop()
+                if not t:
+                    t=1
+                else:
+                    t=int(t)
+                if stack:
+                    stack[-1][1]+=s*t
+                else:
+                    ans+=s*t
+        return ans
