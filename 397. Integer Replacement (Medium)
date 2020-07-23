@@ -1,0 +1,14 @@
+class Solution:
+    def integerReplacement(self, n: int) -> int:
+        self.ans=float("inf")
+        def helper(num,steps):
+            if num<1: pass
+            if num==1:
+                self.ans=min(self.ans,steps)
+            else:
+                if num%2==0:
+                    helper(num//2,steps+1)
+                else:
+                    helper(num-1,steps+1),helper(num+1,steps+1)
+        helper(n,0)
+        return self.ans
