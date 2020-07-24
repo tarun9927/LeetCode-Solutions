@@ -1,0 +1,17 @@
+class Solution:
+    def reconstructQueue(self, people: List[List[int]]) -> List[List[int]]:
+        people,n=sorted(people,key=lambda x:(x[0],x[1])),len(people)
+        ans=[None for _ in range(n)]
+        while people:
+            height,people_in_left=people.pop(0)
+            count=people_in_left
+            for i in range(n):
+                if not ans[i]:
+                    if count==0:
+                        ans[i]=[height,people_in_left]
+                        break
+                    else:
+                        count-=1
+                elif ans[i][0]>=height:
+                    count-=1
+        return ans
