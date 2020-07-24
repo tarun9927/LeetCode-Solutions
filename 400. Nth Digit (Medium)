@@ -1,0 +1,13 @@
+class Solution:
+    def findNthDigit(self, n: int) -> int:
+        if n<10: return n
+        curr,n,dig=90,n-9,2
+        start,end="10","99"
+        while n>(curr*dig):
+            n-=(curr*dig)
+            curr*=10
+            dig+=1
+            start+="0"
+            end+="9"
+        num=str(int(start)+(n//dig if n%dig else (n//dig)-1))
+        return int(num[(n%dig)-1])
