@@ -1,0 +1,15 @@
+class Solution:
+    def countBattleships(self, board: List[List[str]]) -> int:
+        if not board: return 0
+        n,m,ans=len(board),len(board[0]),0
+        def dfs(i,j):
+            if 0<=i<n and 0<=j<m and board[i][j]=="X":
+                board[i][j]="."
+                for x,y in [[0,1],[0,-1],[1,0],[-1,0]]:
+                    dfs(i+x,j+y)
+        for i in range(n):
+            for j in range(m):
+                if board[i][j]=="X":
+                    ans+=1
+                    dfs(i,j)
+        return ans
