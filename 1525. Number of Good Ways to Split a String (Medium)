@@ -1,0 +1,27 @@
+class Solution:
+    def numSplits(self, s: str) -> int:
+        if not s: return 0
+        n=len(s)
+        ltr,rtl,seen,ans=[0 for _ in range(n)],[0 for _ in range(n)],{},0
+        for i in range(n):
+            if s[i] not in seen:
+                seen[s[i]]=True
+                if i-1>=0:
+                    ltr[i]=ltr[i-1]+1
+                else:
+                    ltr[i]=1
+            else:
+                ltr[i]=ltr[i-1]
+        seen={}
+        for i in range(n-1,-1,-1):
+            if s[i] not in seen:
+                seen[s[i]]=True
+                if i+1<n:
+                    rtl[i]=rtl[i+1]+1
+                else:
+                    rtl[i]=1
+            else:
+                rtl[i]=rtl[i+1]
+            if i-1>=0 and rtl[i]==ltr[i-1]:
+                ans+=1
+        return ans
