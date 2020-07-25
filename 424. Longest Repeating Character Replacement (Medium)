@@ -1,0 +1,13 @@
+class Solution:
+    def characterReplacement(self, s: str, k: int) -> int:
+        if not s: return 0
+        n,l,ans,max_count,counts=len(s),0,0,0,{}
+        for r in range(n):
+            if s[r] not in counts: counts[s[r]]=0
+            counts[s[r]]+=1
+            max_count=max(max_count,counts[s[r]])
+            while r-l-max_count+1>k:
+                counts[s[l]]-=1
+                l+=1
+            ans=max(ans,(r-l)+1)
+        return ans
