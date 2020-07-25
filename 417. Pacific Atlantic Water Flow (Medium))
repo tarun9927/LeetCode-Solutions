@@ -1,1 +1,44 @@
+#### DFS ####
+class Solution:
+    def pacificAtlantic(self, matrix: List[List[int]]) -> List[List[int]]:
+        if not matrix: return []
+        n,m,pacific,atlantic=len(matrix),len(matrix[0]),set(),set()
+        def dfs(i,j,visited):
+            visited.add((i,j))
+            for x,y in [[0,1],[0,-1],[1,0],[-1,0]]:
+                ni,nj=i+x,j+y
+                if 0<=ni<n and 0<=nj<m and matrix[ni][nj]>=matrix[i][j] and (ni,nj) not in visited:
+                    dfs(ni,nj,visited)
+        for i in range(n):
+            dfs(i,0,pacific)
+            dfs(i,m-1,atlantic)
+        for j in range(m):
+            dfs(0,j,pacific)
+            dfs(n-1,j,atlantic)
+        return [list(i) for i in (pacific & atlantic)]
+        
+        
 
+#### BFS ####
+class Solution:
+    def pacificAtlantic(self, matrix: List[List[int]]) -> List[List[int]]:
+        if not matrix: return []
+        n,m,pacific,atlantic,queue=len(matrix),len(matrix[0]),set(),set(),[]
+        for i in range(n):
+            queue.extend([[i,0,True],[i,m-1,False]])
+        for j in range(m):
+            queue.extend([[0,j,True],[n-1,j,False]])
+        while queue:
+            i,j,is_pacific=queue.pop(0)
+            if is_pacific:
+                if (i,j) in pacific: continue
+                pacific.add((i,j))
+            else:
+                if (i,j) in atlantic: continue
+                atlantic.add((i,j))
+            for x,y in [[0,1],[0,-1],[1,0],[-1,0]]:
+                ni,nj,visited=i+x,j+y,atlantic
+                if is_pacific: visited=pacific
+                if 0<=ni<n and 0<=nj<m and matrix[ni][nj]>=matrix[i][j] and (ni,nj) not in visited:
+                    queue.append([ni,nj,is_pacific])
+        return [list(i) for i in (pacific&atlantic)]
