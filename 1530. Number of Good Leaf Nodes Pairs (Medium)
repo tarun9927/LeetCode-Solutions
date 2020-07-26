@@ -1,0 +1,39 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def countPairs(self, root: TreeNode, distance: int) -> int:
+        if not root or (not root.left and not root.right): return 0
+        parents,leafs={},[]
+        def traverse(parent,root,dist):
+            if root:
+                parents[root]=[parent,dist]
+                if not root.left and not root.right:
+                    leafs.append(root)
+                traverse(root,root.left,dist+1)
+                traverse(root,root.right,dist+1)
+        traverse(None,root,0)
+        ans=0
+        for i in range(len(leafs)):
+            for j in range(i+1,len(leafs)):
+                l1,l2,dist=leafs[i],leafs[j],0
+                if parents[l1][1]>parents[l2][1]:
+                    dist=diff=parents[l1][1]-parents[l2][1]
+                    while diff>0:
+                        l1=parents[l1][0]
+                        diff-=1
+                elif parents[l1][1]<parents[l2][1]:
+                    dist=diff=parents[l2][1]-parents[l1][1]
+                    while diff>0:
+                        l2=parents[l2][0]
+                        diff-=1
+                while l1!=l2:
+                    l1=parents[l1][0]
+                    l2=parents[l2][0]
+                    dist+=2
+                if dist<=distance:
+                    ans+=1
+        return ans
