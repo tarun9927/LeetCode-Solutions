@@ -1,0 +1,16 @@
+class Solution:
+    def minMutation(self, start: str, end: str, bank: List[str]) -> int:
+        bank,queue=set(bank),[[start,0]]
+        if end not in bank: return -1
+        while queue:
+            current_word,steps=queue.pop(0)
+            if current_word==end: return steps
+            for i in range(len(current_word)):
+                for letter in ["A","C","G","T"]:
+                    if letter!=current_word[i]:
+                        temp=current_word[:i]+letter+current_word[i+1:]
+                        if temp in bank:
+                            queue.append([temp,steps+1])
+                            bank.remove(temp)
+        return -1
+                            
