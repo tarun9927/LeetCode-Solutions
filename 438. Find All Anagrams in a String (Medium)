@@ -1,0 +1,28 @@
+class Solution:
+    def findAnagrams(self, s: str, p: str) -> List[int]:
+        n,m,ans=len(s),len(p),[]
+        if n==0 or m==0 or n<m: return ans
+        counts=[0 for _ in range(26)]
+        for letter in p: counts[ord(letter)-97]+=1
+        l,r,diff=0,0,m
+        while r<m:
+            letter=s[r]
+            counts[ord(letter)-97]-=1
+            if counts[ord(letter)-97]>=0:
+                diff-=1
+            r+=1
+        if diff==0: ans.append(0) 
+        while r<n:
+            letter=s[l]
+            if counts[ord(letter)-97]>=0:
+                diff+=1
+            counts[ord(letter)-97]+=1
+            l+=1
+            letter=s[r]
+            counts[ord(letter)-97]-=1
+            if counts[ord(letter)-97]>=0:
+                diff-=1
+            if diff==0:
+                ans.append(l)
+            r+=1
+        return ans
