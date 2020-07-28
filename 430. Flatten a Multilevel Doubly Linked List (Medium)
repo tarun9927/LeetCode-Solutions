@@ -1,0 +1,32 @@
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val, prev, next, child):
+        self.val = val
+        self.prev = prev
+        self.next = next
+        self.child = child
+"""
+
+class Solution:
+    def flatten(self, head: 'Node') -> 'Node':
+        def flatten(head):
+            if head:
+                if head.child:
+                    nex=head.next
+                    temp=find_last_node(head.child)
+                    head.next=head.child
+                    head.child.prev=head
+                    head.child=None
+                    temp.next=nex
+                    if nex: nex.prev=temp
+                flatten(head.next)
+            else:
+                return None
+        def find_last_node(root):
+            while root.next:
+                root=root.next
+            return root
+        ans=head
+        flatten(head)
+        return ans
