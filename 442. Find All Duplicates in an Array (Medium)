@@ -1,0 +1,21 @@
+#### O(n) Space ####
+class Solution:
+    def findDuplicates(self, nums: List[int]) -> List[int]:
+        seen,ans=set(),[]
+        for i in nums:
+            if i in seen:
+                ans.append(i)
+            seen.add(i)
+        return ans
+
+#### O(1) Space ####
+class Solution:
+    def findDuplicates(self, nums: List[int]) -> List[int]:
+        ans=[]
+        for number in nums:
+            ind=abs(number)-1
+            if nums[ind]<1:
+                ans.append(abs(ind)+1)
+            else:
+                nums[ind]=-nums[ind]
+        return ans
