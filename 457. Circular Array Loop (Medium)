@@ -1,0 +1,13 @@
+class Solution:
+    def circularArrayLoop(self, nums: List[int]) -> bool:
+        n=len(nums)
+        if n<=1: return False
+        for i in range(n):
+            temp=str(i)
+            num=nums[i]
+            while type(nums[i])==int and num*nums[i]>0 and nums[i]%n!=0:
+                jump=nums[i]
+                nums[i]=temp
+                i=(i+jump)%n
+            if nums[i]==temp: return True
+        return False
