@@ -1,0 +1,11 @@
+class Solution:
+    def PredictTheWinner(self, nums: List[int]) -> bool:
+        def canwin(A,nums,sumA,sumB):
+            if not nums:
+                return sumA>=sumB
+            else:
+                if A:
+                    return canwin(not A, nums[1:], sumA+nums[0],sumB) or canwin(not A, nums[:-1], sumA+nums[-1],sumB)
+                else:
+                    return canwin(not A, nums[1:], sumA,sumB+nums[0]) and canwin(not A, nums[:-1], sumA,sumB+nums[-1])
+        return canwin(True,nums,0,0)
