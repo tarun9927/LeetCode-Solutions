@@ -1,0 +1,19 @@
+class Solution:
+    def findMaxForm(self, strs: List[str], m: int, n: int) -> int:
+        seen={}
+        def dfs(ind,rem1,rem0):
+            if ind<l:
+                key=(ind,rem1,rem0)
+                if key in seen:
+                    return seen[key]
+                else:
+                    temp=dfs(ind+1,rem1,rem0)
+                    c0,c1=strs[ind].count("0"),strs[ind].count("1")
+                    if c0<=rem0 and c1<=rem1:
+                        temp=max(temp,dfs(ind+1,rem1-c1,rem0-c0)+1)
+                    seen[key]=temp
+                    return temp
+            else:
+                return 0
+        l=len(strs)
+        return dfs(0,n,m)
