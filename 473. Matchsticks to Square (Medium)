@@ -1,0 +1,17 @@
+class Solution:
+    def makesquare(self, nums: List[int]) -> bool:
+        if not nums: return False
+        summ=sum(nums)
+        if summ%4!=0: return False
+        def canmake(sides,nums,side_len):
+            if not nums:
+                return len(sides)==4 and len(set(sides))==1
+            else:
+                for i in range(4):
+                    if nums[0]+sides[i]>side_len: continue
+                    sides[i]+=nums[0]
+                    a=canmake(sides,nums[1:],side_len)
+                    sides[i]-=nums[0]
+                    if a:return True
+                return False
+        return canmake([0,0,0,0],sorted(nums,reverse=True),summ//4)
