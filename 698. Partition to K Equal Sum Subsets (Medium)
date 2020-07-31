@@ -1,0 +1,15 @@
+class Solution:
+    def canPartitionKSubsets(self, nums: List[int], k: int) -> bool:
+        def is_possible(sides,nums,target):
+            if not nums:
+                return len(set(sides))==1
+            else:
+                for i in range(k):
+                    if sides[i]+nums[0]>target: continue
+                    sides[i]+=nums[0]
+                    if is_possible(sides,nums[1:],target):
+                        return True
+                    sides[i]-=nums[0]
+                return False
+        summ=sum(nums)
+        return False if summ%k!=0 else is_possible([0 for i in range(k)],sorted(nums,reverse=True),summ//k)
