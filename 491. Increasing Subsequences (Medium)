@@ -1,0 +1,12 @@
+class Solution:
+    def findSubsequences(self, nums: List[int]) -> List[List[int]]:
+        ans,n=set(),len(nums)
+        def dfs(ind,curr):
+            if len(curr)>=2:
+                ans.add(tuple(curr))
+            for i in range(ind+1,n):
+                if nums[ind]<=nums[i]:
+                    dfs(i,curr+[nums[i]],)
+        for i in range(n):
+            dfs(i,[nums[i]])
+        return list(ans)
