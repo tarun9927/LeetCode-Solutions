@@ -1,0 +1,18 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def largestValues(self, root: TreeNode) -> List[int]:
+        ans=[]
+        def traverse(root,lvl):
+            if root:
+                while lvl>=len(ans):
+                    ans.append(float("-inf"))
+                ans[lvl]=max(ans[lvl],root.val)
+                traverse(root.left,lvl+1)
+                traverse(root.right,lvl+1)
+        traverse(root,0)
+        return ans
