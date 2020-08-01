@@ -1,0 +1,8 @@
+class Solution:
+    def magicalString(self, n: int) -> int:
+        a,ind,l=[1,2,2],2,3
+        while l<n:
+            a.extend([3-a[-1]]*a[ind])
+            l+=a[ind]
+            ind+=1
+        return a[:n].count(1)
