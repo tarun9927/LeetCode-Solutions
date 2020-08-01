@@ -9,7 +9,7 @@ class Solution:
         ans=[]
         def traverse(root,lvl):
             if root:
-                while lvl>=len(ans):
+                if lvl==len(ans):
                     ans.append(float("-inf"))
                 ans[lvl]=max(ans[lvl],root.val)
                 traverse(root.left,lvl+1)
