@@ -1,0 +1,11 @@
+class Solution:
+    def detectCapitalUse(self, word: str) -> bool:
+        i,n=0,len(word)
+        while i<n and word[i].isupper():
+            i+=1
+        if i==n: return True
+        if i>1: return False
+        while i<n and word[i].islower():
+            i+=1
+        if i==n: return True
+        return False
