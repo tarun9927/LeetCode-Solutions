@@ -1,0 +1,17 @@
+class Solution:
+    def findLUSlength(self, strs: List[str]) -> int:
+        def subseq(w1,w2):
+            i=0
+            for letter in w2:
+                if i<len(w1) and letter==w1[i]:
+                    i+=1
+            return i==len(w1)
+        
+        strs.sort(key= lambda x: len(x),reverse=True)
+        for i in range(len(strs)):
+            found=True
+            for j in range(len(strs)):
+                if i!=j and subseq(strs[i],strs[j]): break
+            else:
+                return len(strs[i])
+        return -1
