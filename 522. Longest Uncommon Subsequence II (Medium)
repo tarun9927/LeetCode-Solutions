@@ -9,7 +9,6 @@ class Solution:
         
         strs.sort(key= lambda x: len(x),reverse=True)
         for i in range(len(strs)):
-            found=True
             for j in range(len(strs)):
                 if i!=j and subseq(strs[i],strs[j]): break
             else:
