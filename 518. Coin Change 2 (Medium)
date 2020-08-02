@@ -1,0 +1,15 @@
+class Solution:
+    def change(self, amount: int, coins: List[int]) -> int:
+        def dp(amount, ind):
+            if amount==0:
+                return 1
+            if amount<0 or ind==n:
+                return 0
+            if (ind,amount) in seen:
+                return seen[ind,amount]
+            select_coin=dp(amount-coins[ind],ind)
+            skip_coin=dp(amount,ind+1)
+            seen[ind,amount]=select_coin+skip_coin
+            return seen[ind,amount]
+        seen,n={},len(coins)
+        return dp(amount, 0)
