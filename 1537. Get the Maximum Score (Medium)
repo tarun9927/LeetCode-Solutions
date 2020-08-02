@@ -1,0 +1,26 @@
+class Solution:
+    def maxSum(self, nums1: List[int], nums2: List[int]) -> int:
+        memo,l1,l2={},len(nums1),len(nums2)
+        def dp(ind,leng,arr):
+            if arr==1:
+                array=nums1
+            else:
+                array=nums2
+            key=(ind,arr)
+            if ind==leng:
+                return 0
+            if key in memo:
+                return memo[key]
+            temp=0
+            if arr==1:
+                ind2=bisect.bisect_left(nums2,array[ind])
+                if ind2 != len(nums2) and nums2[ind2] == array[ind]:
+                    temp=dp(ind2+1,l2,2)+array[ind]
+            else:
+                ind2=bisect.bisect_left(nums1,array[ind])
+                if ind2 != len(nums1) and nums1[ind2] == array[ind]:
+                    temp=dp(ind2+1,l1,1)+array[ind]
+            temp=max(temp,dp(ind+1,leng,arr)+array[ind])
+            memo[key]=temp
+            return memo[key]
+        return max(dp(0,l1,1),dp(0,l2,2))%1000000007
