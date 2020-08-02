@@ -1,0 +1,16 @@
+class Solution:
+    def getWinner(self, arr: List[int], k: int) -> int:
+        n=len(arr)
+        for i in range(len(arr)):
+            count=0
+            if i-1>=0:
+                if arr[i-1]<arr[i]:
+                    count+=1
+            temp=i+1
+            while temp<n and arr[temp]<arr[i] and count<k:
+                temp+=1
+                count+=1
+            if count>=k:
+                return arr[i]
+            elem=arr[i]
+        return max(arr)
