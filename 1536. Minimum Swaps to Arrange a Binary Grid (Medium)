@@ -1,0 +1,24 @@
+class Solution:
+    def minSwaps(self, grid: List[List[int]]) -> int:
+        n,counts,ans=len(grid),[],0
+        def count_zeros(row):
+            j,count=n-1,0
+            while j>=0 and row[j]==0:
+                count+=1
+                j-=1
+            return count
+        for i in range(n):
+            counts.append(count_zeros(grid[i]))
+        for i in range(n):
+            for j in range(i,n):
+                if counts[j]>=(n-1)-i:
+                    temp2=counts[j]
+                    for k in range(j,i-1,-1):
+                        counts[k]=counts[k-1]
+                    ans+=(j-i)
+                    counts[i]=temp2
+                    break
+            else:
+                return -1
+        return ans
+                    
