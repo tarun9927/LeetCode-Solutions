@@ -1,0 +1,12 @@
+class Solution:
+    def checkSubarraySum(self, nums: List[int], k: int) -> bool:
+        total_sum,seen=0,{0:-1}
+        for i,num in enumerate(nums):
+            total_sum+=num
+            if k!=0: total_sum%=k
+            if total_sum in seen:
+                if (i-seen[total_sum])>1:
+                    return True
+            else:
+                seen[total_sum]=i
+        return False
