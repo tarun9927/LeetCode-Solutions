@@ -1,0 +1,27 @@
+class Solution:
+    def updateBoard(self, board: List[List[str]], click: List[int]) -> List[List[str]]:
+        if not board: return []
+        n,m=len(board),len(board[0])
+        queue,vis=[click],{}
+        while queue:
+            i,j=queue.pop(0)
+            if (i,j) in vis: continue
+            vis[i,j]=True
+            if board[i][j]=="M":
+                board[i][j]="X"
+                break
+            elif board[i][j]=="E":
+                count=0
+                for x,y in [[-1,-1],[-1,0],[-1,1],[0,1],[1,1],[1,0],[1,-1],[0,-1]]:
+                    ni,nj=i+x,y+j
+                    if 0<=ni<n and 0<=nj<m and board[ni][nj]=="M":
+                        count+=1
+                if count:
+                    board[i][j]=str(count)
+                else:
+                    board[i][j]="B"
+                    for x,y in [[-1,-1],[-1,0],[-1,1],[0,1],[1,1],[1,0],[1,-1],[0,-1]]:
+                        ni,nj=i+x,y+j
+                        if 0<=ni<n and 0<=nj<m and board[ni][nj]=="E":
+                            queue.append([ni,nj])
+        return board
