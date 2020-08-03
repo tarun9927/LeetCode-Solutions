@@ -1,0 +1,11 @@
+class Solution:
+    def findMaxLength(self, nums: List[int]) -> int:
+        seen,summ,ans={0:-1},0,0
+        for i in range(len(nums)):
+            summ+=1 if nums[i]==1 else -1
+            if summ in seen:
+                print("A")
+                ans=max(ans,i-seen[summ])
+            else:
+                seen[summ]=i
+        return ans
