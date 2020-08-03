@@ -1,0 +1,24 @@
+class Solution:
+
+    def __init__(self, w: List[int]):
+        self.w=[w[0]]
+        for i in range(1,len(w)):
+            self.w.append(self.w[-1]+w[i])
+
+    def pickIndex(self) -> int:
+        val=random.randrange(1,self.w[-1]+1)
+        l,r=0,len(self.w)-1
+        while l<=r:
+            mid=(l+r)//2
+            if self.w[mid]==val:
+                return mid
+            elif self.w[mid]>val:
+                r=mid-1
+            else:
+                l=mid+1
+        return l
+
+
+# Your Solution object will be instantiated and called as such:
+# obj = Solution(w)
+# param_1 = obj.pickIndex()
