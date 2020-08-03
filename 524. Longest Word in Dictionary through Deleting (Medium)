@@ -1,0 +1,13 @@
+class Solution:
+    def findLongestWord(self, s: str, d: List[str]) -> str:
+        d,n=sorted(d,key=lambda x: (-len(x),x)),len(s)
+        for word in d:
+            p1,p2,n1=0,0,len(word)
+            while p1<n1 and p2<n:
+                if word[p1]==s[p2]:
+                    p1+=1
+                    p2+=1
+                else:
+                    p2+=1
+            if p1==n1: return word
+        return ""
