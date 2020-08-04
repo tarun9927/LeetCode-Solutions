@@ -1,0 +1,21 @@
+class Solution:
+    def updateMatrix(self, matrix: List[List[int]]) -> List[List[int]]:
+        n,m,ans=len(matrix),len(matrix[0]),[]
+        def dfs(i,j):
+            queue,vis=[[i,j,0]],{}
+            while queue:
+                i,j,dist=queue.pop(0)
+                if (i,j) in vis: continue
+                vis[i,j]=True
+                if matrix[i][j]==0:
+                    return dist
+                for x,y in [[0,1],[0,-1],[1,0],[-1,0]]:
+                    ni,nj=i+x,j+y
+                    if 0<=ni<n and 0<=nj<m:
+                        queue.append([ni,nj,dist+1])
+        for i in range(n):
+            temp=[]
+            for j in range(m):
+                temp.append(dfs(i,j))
+            ans.append(temp)
+        return ans
