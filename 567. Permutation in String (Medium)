@@ -1,0 +1,14 @@
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        n,l=len(s1),0
+        s1,r=collections.Counter(s1),l+(n-1)
+        if r>=len(s2): return False
+        temp=collections.Counter(s2[l:r+1])
+        while l<=r and r<len(s2):
+            if temp==s1: return True
+            temp[s2[l]]-=1
+            if temp[s2[l]]==0: del temp[s2[l]]
+            l+=1
+            r+=1
+            if r<len(s2): temp[s2[r]]+=1
+        return False
