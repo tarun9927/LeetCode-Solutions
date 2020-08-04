@@ -1,0 +1,19 @@
+class Solution:
+    def nextGreaterElement(self, n: int) -> int:
+        num=list(str(n))
+        i,l,ind,not_found=0,len(num),None,True
+        while i<l:
+            if i+1<l and num[i]<num[i+1]:
+                ind=i
+            i+=1
+        if ind==None:
+            num[0],num[-1]=num[-1],num[0]
+            num[1:-1]=num[1:-1][::-1]
+        else:
+            num[ind+1:]=num[ind+1:][::-1]
+            for i in range(ind+1,l):
+                if num[ind]<num[i]:
+                    num[ind],num[i]=num[i],num[ind]
+                    break
+        ans=int("".join(num))
+        return ans if ans>n and ans<2**31 else -1
