@@ -1,0 +1,11 @@
+class Solution:
+    def leastBricks(self, wall: List[List[int]]) -> int:
+        n,counts,ans=len(wall),{},len(wall)
+        for line in wall:
+            temp=0
+            for brick in line[:-1]:
+                temp+=brick
+                if temp not in counts: counts[temp]=0
+                counts[temp]+=1
+                ans=min(ans,n-counts[temp])
+        return ans
