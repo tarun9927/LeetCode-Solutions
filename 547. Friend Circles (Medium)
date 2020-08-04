@@ -1,0 +1,17 @@
+class Solution:
+    def findCircleNum(self, matrix: List[List[int]]) -> int:
+        def bfs(person):
+            queue=[person]
+            while queue:
+                u=queue.pop(0)
+                if u in visited: continue
+                visited.add(u)
+                for v in range(len(matrix[u])):
+                    if matrix[u][v]==1 and v not in visited:
+                        queue.append(v)
+        visited,ans=set(),0
+        for i in range(len(matrix)):
+            if i not in visited:
+                ans+=1
+                bfs(i)
+        return ans
