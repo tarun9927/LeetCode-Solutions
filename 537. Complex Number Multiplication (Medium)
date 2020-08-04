@@ -1,0 +1,7 @@
+class Solution:
+    def complexNumberMultiply(self, a: str, b: str) -> str:
+        a = [int(x) for x in a.replace('i','').split('+')]
+        b = [int(x) for x in b.replace('i','').split('+')]
+        return str(a[0]*b[0]-a[1]*b[1])+'+'+str(a[0]*b[1]+a[1]*b[0])+'i'
+                
+            
