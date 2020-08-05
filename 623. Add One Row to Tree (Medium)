@@ -1,0 +1,27 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def addOneRow(self, root: TreeNode, v: int, d: int) -> TreeNode:
+        def helper(root,depth):
+            if root and depth+1<=d:
+                if depth+1==d:
+                    Node=TreeNode(v)
+                    Node.left=root.left
+                    root.left=Node
+                    Node1=TreeNode(v)
+                    Node1.right=root.right
+                    root.right=Node1
+                else:
+                    helper(root.left,depth+1)
+                    helper(root.right,depth+1)
+        if not d: return root
+        if d==1:
+            Node=TreeNode(v)
+            Node.left=root
+            return Node
+        helper(root,1)
+        return root
