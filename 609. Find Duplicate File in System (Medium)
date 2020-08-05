@@ -1,0 +1,14 @@
+class Solution:
+    def findDuplicate(self, paths: List[str]) -> List[List[str]]:
+        files={}
+        for directory in paths:
+            directory=directory.split(" ")
+            for file in directory[1:]:
+                name,i="",0
+                while i<len(file) and file[i]!="(":
+                    name+=file[i]
+                    i+=1
+                content=file[i+1:-1]
+                if content not in files: files[content]=[]
+                files[content].append(directory[0]+"/"+name)
+        return [i for i in files.values() if len(i)>1]
