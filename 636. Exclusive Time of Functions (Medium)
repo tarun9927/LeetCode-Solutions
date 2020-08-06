@@ -1,0 +1,18 @@
+class Solution:
+    def exclusiveTime(self, n: int, logs: List[str]) -> List[int]:
+        stack,ans=[],[0 for _ in range(n)]
+        for log in logs:
+            ID,stamp,time=log.split(":")
+            ID,time=int(ID),int(time)
+            if stamp=="start":
+                if not stack:
+                    stack.append([ID,time])
+                else:
+                    ans[stack[-1][0]]+=time-stack[-1][1]
+                    stack.append([ID,time])
+            else:
+                start=stack.pop()
+                ans[ID]+=(time-start[1])+1
+                if stack:
+                    stack[-1][1]=time+1
+        return ans
