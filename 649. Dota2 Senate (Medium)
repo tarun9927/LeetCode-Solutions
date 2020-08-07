@@ -1,0 +1,26 @@
+class Solution:
+    def predictPartyVictory(self, senate: str) -> str:
+        senate,people,bans=list(senate),[0,0],[0,0]
+        for i in senate:
+            if i=="R":
+                people[0]+=1
+            else:
+                people[1]+=1
+        while all(people):
+            current=senate.pop(0)
+            if current=="R":
+                if bans[0]>0:
+                    bans[0]-=1
+                    people[0]-=1
+                else:
+                    bans[1]+=1
+                    senate.append(current)
+            else:
+                if bans[1]>0:
+                    bans[1]-=1
+                    people[1]-=1
+                else:
+                    bans[0]+=1
+                    senate.append(current)
+        return "Radiant" if people[0] else "Dire"
+        
