@@ -1,0 +1,14 @@
+class Solution:
+    def minSteps(self, n: int) -> int:
+        def createstring(length,coppied,curr,steps):
+            if length>=n:
+                if length==n:
+                    return steps
+                return float("inf")
+            if (length,coppied) in seen:
+                return seen[length,coppied]
+            seen[length,coppied]=min(createstring(length+len(coppied),curr+coppied,curr+coppied,steps+2),createstring(length+len(coppied),coppied,curr+coppied,steps+1))
+            return seen[length,coppied]
+        if n==1: return 0
+        seen={}
+        return createstring(1,"A","A",1)
