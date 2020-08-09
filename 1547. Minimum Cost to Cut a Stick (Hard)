@@ -1,0 +1,18 @@
+class Solution:
+    def minCost(self, n: int, cuts: List[int]) -> int:
+        seen={}
+        def find_min(cuts,curr,length):
+            if not cuts:
+                return curr
+            if (length[0],length[1]) in seen:
+                return seen[length[0],length[1]]
+            temp=float("inf")
+            temp2=[i for i in cuts if length[0]<=i<=length[1]]
+            for i in range(len(temp2)):
+                temp3=length[1]-length[0]
+                temp3+=find_min(temp2[:i]+temp2[i+1:],0,[temp2[i],length[1]])
+                temp3+=find_min(temp2[:i]+temp2[i+1:],0,[length[0],temp2[i]])
+                temp=min(temp,temp3)
+            seen[length[0],length[1]]=temp if temp!=float("inf") else 0
+            return seen[length[0],length[1]]
+        return find_min(cuts,0,[0,n])
