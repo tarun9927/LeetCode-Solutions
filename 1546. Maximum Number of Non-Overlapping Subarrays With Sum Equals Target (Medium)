@@ -1,0 +1,16 @@
+class Solution:
+    def maxNonOverlapping(self, nums: List[int], target: int) -> int:
+        seen,ssf={0:[-1]},0
+        subarray=set()
+        ans,prev=0,float("-inf")
+        for i in range(len(nums)):
+            ssf+=nums[i]
+            if ssf-target in seen:
+                for temp in seen[ssf-target]:
+                    pair=[temp+1,i]
+                    if prev<pair[0]:
+                        prev=pair[1]
+                        ans+=1
+            if ssf not in seen: seen[ssf]=[]
+            seen[ssf].append(i)
+        return ans
