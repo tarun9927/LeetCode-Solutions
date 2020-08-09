@@ -1,0 +1,13 @@
+class Solution:
+    def canConvertString(self, s: str, t: str, k: int) -> bool:
+        if len(s)!=len(t): return False
+        if s==t: return True
+        difs={}
+        for i in range(len(s)):
+            diff=(ord(t[i])-ord(s[i]))%26
+            if diff==0: continue
+            if diff>k: return False
+            if diff not in difs: difs[diff]=0
+            difs[diff]+=1
+            if ((difs[diff]-1)*26)+diff>k: return False
+        return True
