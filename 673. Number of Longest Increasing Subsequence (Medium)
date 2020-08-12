@@ -1,0 +1,16 @@
+class Solution:
+    def findNumberOfLIS(self, nums: List[int]) -> int:
+        n,max_len=len(nums),float("-inf")
+        dp=[[1,1] for i in range(n)]
+        for i in range(n):
+            curr_longest,count=1,0
+            for j in range(i):
+                if nums[i]<=nums[j]: continue
+                if dp[j][0]+1>curr_longest:
+                    curr_longest=dp[j][0]+1
+                    count=0
+                if dp[j][0]==curr_longest-1:
+                    count+=dp[j][1]
+            dp[i]=[curr_longest,max(dp[i][1],count)]
+            max_len=max(max_len,curr_longest)
+        return sum([i[1] for i in dp if i[0]==max_len])
