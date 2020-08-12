@@ -1,0 +1,17 @@
+class Solution:
+    def maximumSwap(self, num: int) -> int:
+        nums,stack=list(str(num)),[]
+        for i,digit in enumerate(nums):
+            if not stack or int(stack[-1][1])>int(digit):
+                stack.append([i,digit])
+            elif int(stack[-1][1])<int(digit):
+                maxx=[-1,float("-inf")]
+                for j in range(i,len(nums)):
+                    if int(nums[j])>=maxx[1]:
+                        maxx=[j,int(nums[j])]
+                if 0<=maxx[0]<len(nums):
+                    while stack and int(stack[-1][1])<maxx[1]:
+                        to_be_swapped=stack.pop()
+                    nums[maxx[0]],nums[to_be_swapped[0]]=nums[to_be_swapped[0]],nums[maxx[0]]
+                break
+        return int("".join(nums))
