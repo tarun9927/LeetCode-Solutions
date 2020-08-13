@@ -1,0 +1,40 @@
+class MagicDictionary:
+
+    def __init__(self):
+        self.dictionary={}
+        
+
+    def buildDict(self, dict: List[str]) -> None:
+        for word in dict:
+            self.add_word(list(word))
+        return
+        
+
+    def search(self, word: str) -> bool:
+        return self.is_in(0,self.dictionary,0,len(word),word)
+                    
+    def add_word(self,word):
+        current_dict=self.dictionary
+        while word:
+            letter=word.pop(0)
+            if letter not in current_dict:
+                current_dict[letter]={}
+            current_dict=current_dict[letter]
+        current_dict["*"]={}
+        
+    def is_in(self,ind,curr,count,n,word):
+        if ind==n:
+            return "*" in curr and count==1
+        for i in curr:
+            temp=False
+            if i==word[ind]:
+                temp=self.is_in(ind+1,curr[i],count,n,word)
+            elif count<1:
+                temp=self.is_in(ind+1,curr[i],count+1,n,word)
+            if temp: return True
+        return False
+
+# Your MagicDictionary object will be instantiated and called as such:
+# obj = MagicDictionary()
+# obj.buildDict(dict)
+# param_2 = obj.search(word)
