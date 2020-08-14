@@ -1,0 +1,14 @@
+class Solution:
+    def knightProbability(self, N: int, K: int, r: int, c: int) -> float:
+        def find_prob(r,c,k):
+            if not 0<=r<N or not 0<=c<N:return 0
+            if k==0: return 1
+            if (r,c,k) in memo:
+                return memo[r,c,k]
+            temp=0
+            for x,y in directions:
+                temp+=0.125*find_prob(r+x,c+y,k-1)
+            memo[r,c,k]=temp
+            return temp
+        directions,memo=[[-2,-1],[-1,-2],[-2,1],[-1,2],[1,2],[2,1],[2,-1],[1,-2]],{}
+        return find_prob(r,c,K)
