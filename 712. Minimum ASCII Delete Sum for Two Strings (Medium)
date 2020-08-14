@@ -1,0 +1,14 @@
+class Solution:
+    def minimumDeleteSum(self, s1: str, s2: str) -> int:
+        n,m,memo=len(s1),len(s2),{}
+        def helper(s1,s2,p1,p2):
+            if p1==n or p2==m:
+                return sum(ord(letter) for letter in s1[p1:])+sum(ord(letter) for letter in s2[p2:])
+            if (p1,p2) in memo:
+                return memo[p1,p2]
+            if s1[p1]==s2[p2]:
+                memo[p1,p2]=helper(s1,s2,p1+1,p2+1)
+            else:
+                memo[p1,p2]=min(helper(s1,s2,p1+1,p2)+ord(s1[p1]),helper(s1,s2,p1,p2+1)+ord(s2[p2]))
+            return memo[p1,p2]
+        return helper(s1,s2,0,0)
