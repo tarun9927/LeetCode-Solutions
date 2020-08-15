@@ -1,0 +1,21 @@
+class MyCalendarTwo:
+
+    def __init__(self):
+        self.intervals=[]
+        self.overlaps=[]
+
+    def book(self, start: int, end: int) -> bool:
+        count=0
+        for interval in self.overlaps:
+            if interval[0]<end and start<interval[1]:
+                return False
+        for interval in self.intervals:
+            if interval[0]<end and start<interval[1]:
+                self.overlaps.append([max(start,interval[0]),min(end,interval[1])])
+        self.intervals.append([start,end])
+        return True
+
+
+# Your MyCalendarTwo object will be instantiated and called as such:
+# obj = MyCalendarTwo()
+# param_1 = obj.book(start,end)
