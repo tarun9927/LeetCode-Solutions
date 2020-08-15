@@ -1,0 +1,23 @@
+class Solution:
+    def accountsMerge(self, accounts: List[List[str]]) -> List[List[str]]:
+        names,graph,visited,ans=collections.defaultdict(str),collections.defaultdict(set),set(),[]
+        for account in accounts:
+            for id in account[1:]:
+                graph[account[1]].add(id)
+                graph[id].add(account[1])
+                names[id]=account[0]
+        for email in graph:
+            if email in visited: continue
+            visited.add(email)
+            stack=[email]
+            mails=[]
+            while stack:
+                current=stack.pop()
+                mails.append(current)
+                for next in graph[current]:
+                    if next not in visited:
+                        stack.append(next)
+                        visited.add(next)
+            ans.append([names[current]]+sorted(mails))
+        return ans
+            
