@@ -1,0 +1,11 @@
+class Solution:
+    def minDays(self, n: int) -> int:
+        def helper(n):
+            if n<=1:
+                return n
+            if n in seen:
+                return seen[n]
+            seen[n]=1+min((n%2)+helper(n//2),(n%3)+helper(n//3))
+            return seen[n]
+        seen={}
+        return helper(n)
