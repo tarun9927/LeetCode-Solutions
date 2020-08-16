@@ -1,0 +1,25 @@
+class Solution:
+    def asteroidCollision(self, asteroids: List[int]) -> List[int]:
+        stack=[]
+        for i in asteroids:
+            if i<0:
+                if not stack:
+                    stack.append(i)
+                    continue
+                while stack:
+                    if stack[-1]>0:
+                        if abs(i)>stack[-1]:
+                            stack.pop()
+                            if not stack:
+                                stack.append(i)
+                                break
+                        else:
+                            if abs(i)==stack[-1]:
+                                stack.pop()
+                            break
+                    else:
+                        stack.append(i)
+                        break
+            else:
+                stack.append(i)
+        return stack
