@@ -1,0 +1,17 @@
+class Solution:
+    def monotoneIncreasingDigits(self, N: int) -> int:       
+        if N<10: return N
+        N=list(map(int,str(N)))
+        ans,n,ind,i=[],len(N),len(N),0
+        while i<n:
+            if i==n-1 or N[i]<=N[i+1]:
+                ans.append(str(N[i]))
+            else:
+                if N.count(N[i])>1:
+                    i=N.index(N[i])
+                    ans=ans[:i]
+                ans.append(str(N[i]-1))
+                ind=i+1
+                break
+            i+=1
+        return int("".join(ans).lstrip("0")+("9"*(n-ind)))
