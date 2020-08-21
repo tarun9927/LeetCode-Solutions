@@ -2,13 +2,15 @@ class Solution:
     def monotoneIncreasingDigits(self, N: int) -> int:       
         if N<10: return N
         N=list(map(int,str(N)))
-        ans,n,ind,i=[],len(N),len(N),0
+        ans,n,ind,i,counts=[],len(N),len(N),0,{}
         while i<n:
+            if N[i] not in counts: counts[N[i]]=[]
+            counts[N[i]].append(i)
             if i==n-1 or N[i]<=N[i+1]:
                 ans.append(str(N[i]))
             else:
-                if N.count(N[i])>1:
-                    i=N.index(N[i])
+                if len(counts[N[i]])>1:
+                    i=counts[N[i]][0]
                     ans=ans[:i]
                 ans.append(str(N[i]-1))
                 ind=i+1
