@@ -1,0 +1,37 @@
+#### Dijkstra's Algorithm ####
+class Solution:
+    def networkDelayTime(self, times: List[List[int]], N: int, K: int) -> int:
+        graph,queue,dist,ans={},collections.deque([(0,K)]),[float("inf") for _ in range(N)],float("-inf")
+        for edge in times:
+            if edge[0] not in graph: graph[edge[0]]=[]
+            if edge[1] not in graph: graph[edge[1]]=[]
+            graph[edge[0]].append(edge[1:])
+        while queue:
+            time,u=queue.popleft()
+            if time>=dist[u-1]: continue
+            dist[u-1]=time
+            for v,t in graph[u]:
+                queue.append((time+t,v))
+        for i in dist:
+            ans=max(ans,i)
+            if i==float("inf"): return -1
+        return ans
+        
+        
+        
+####  Depth First Search  ####
+class Solution:
+    def networkDelayTime(self, times: List[List[int]], N: int, K: int) -> int:
+        graph,dist={},[float("inf") for _ in range(N)]
+        for edge in times:
+            if edge[0] not in graph: graph[edge[0]]=[]
+            if edge[1] not in graph: graph[edge[1]]=[]
+            graph[edge[0]].append(edge[1:])
+        def dfs(u,time):
+            if time<dist[u-1]:
+                dist[u-1]=time
+                for v,t in sorted(graph[u],key=lambda x : x[1]):
+                    dfs(v,time+t)
+        dfs(K,0)
+        ans=max(dist)
+        return ans if ans!=float("inf") else -1
