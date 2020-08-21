@@ -1,0 +1,12 @@
+class Solution:
+    def deleteAndEarn(self, nums: List[int]) -> int:
+        if not nums: return 0
+        counts,minn,maxx=collections.defaultdict(int),float("inf"),float("-inf")
+        for i in nums:
+            counts[i]+=i
+            maxx=max(i,maxx)
+            minn=min(i,minn)
+        curr,prev=0,0
+        for i in range(minn,maxx+1):
+            prev,curr=curr,max(prev+counts[i],curr)
+        return curr
