@@ -1,0 +1,23 @@
+class Solution:
+    def totalFruit(self, tree: List[int]) -> int:
+        if not tree: return 0
+        chars,ans=collections.defaultdict(int),1
+        chars[tree[0]],dc=1,1
+        l,r=0,0
+        while l<=r and r<len(tree):
+            if dc>2:
+                chars[tree[l]]-=1
+                if chars[tree[l]]==0:
+                    dc-=1
+                l+=1
+            else:
+                r+=1
+                if r==len(tree): break
+                if chars[tree[r]]==0:
+                    dc+=1
+                chars[tree[r]]+=1
+            if dc<=2:
+                ans=max(ans,(r-l)+1)
+        return ans
+                
+                
