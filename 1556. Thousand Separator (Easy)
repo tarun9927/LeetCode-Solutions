@@ -1,0 +1,11 @@
+class Solution:
+    def thousandSeparator(self, n: int) -> str:
+        if len(str(n))<=3: return str(n)
+        ans,count=[],0
+        for i in str(n)[::-1]:
+            ans.append(i)
+            count+=1
+            if count==3:
+                ans.append(".")
+                count=0
+        return "".join(ans)[::-1].lstrip(".")
