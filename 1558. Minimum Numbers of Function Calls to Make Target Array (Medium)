@@ -1,0 +1,16 @@
+class Solution:
+    def minOperations(self, nums: List[int]) -> int:
+        n=len(nums)
+        def find_min(nums,steps):
+            if set(nums)=={0}:
+                return steps
+            for i in range(n):
+                if nums[i]%2:
+                    nums[i]-=1
+                    steps+=1
+            if set(nums)=={0}:
+                return steps
+            for i in range(n):
+                nums[i]//=2
+            return find_min(nums,steps+1)
+        return find_min(nums,0)
