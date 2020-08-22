@@ -1,0 +1,10 @@
+class Solution:
+    def minDominoRotations(self, A: List[int], B: List[int]) -> int:
+        same,countsA,countsB=collections.defaultdict(int),collections.Counter(A),collections.Counter(B)
+        for i in range(len(A)):
+            if A[i]==B[i]:
+                same[A[i]]+=1
+        for i in range(1,7):
+            if (countsA[i]+countsB[i])-same[i]==len(A):
+                return min(countsA[i],countsB[i])-same[i]
+        return -1
