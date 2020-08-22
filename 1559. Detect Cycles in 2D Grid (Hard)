@@ -1,0 +1,27 @@
+class Solution:
+    def containsCycle(self, grid: List[List[str]]) -> bool:
+        if not grid: return False
+        n,m=len(grid),len(grid[0])
+        vis=[[-1 for i in range(m)] for j in range(n)]
+        def bfs(i,j):
+            queue=[[i,j]]
+            while queue:
+                x,y=queue.pop(0)
+                if vis[x][y]==1: continue
+                vis[x][y]=1
+                for j,h in [[-1,0],[1,0],[0,-1],[0,1]]:
+                    nx,ny=x+j,y+h
+                    if 0<=nx<n and 0<=ny<m and grid[nx][ny]==grid[x][y]:
+                        if vis[nx][ny]==0:
+                            #print("A")
+                            return True
+                        if vis[nx][ny]==1: continue
+                        vis[nx][ny]=0
+                        queue.append([nx,ny])
+            return False
+        for i in range(n):
+            for j in range(m):
+                if vis[i][j]==-1:
+                    vis[i][j]=0
+                    if bfs(i,j): return True
+        return False
