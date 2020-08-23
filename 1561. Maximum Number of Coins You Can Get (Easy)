@@ -1,0 +1,18 @@
+class Solution:
+    def maxCoins(self, piles: List[int]) -> int:
+        def find_piles(piles):
+            #print(piles)
+            if not piles:
+                return 0
+            key=tuple(piles)
+            if key in seen:
+                return seen[key]
+            piles.remove(max(piles))
+            temp=float("-inf")
+            for i in range(len(piles)-1):
+                temp=max(temp,find_piles(piles[:i]+piles[i+1:-1])+piles[i])
+            temp=max(temp,find_piles(piles[:-2])+piles[-1])
+            seen[key]=temp
+            return temp
+        seen={}
+        return find_piles(piles)
