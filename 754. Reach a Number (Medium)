@@ -1,0 +1,8 @@
+class Solution:
+    def reachNumber(self, target: int) -> int:
+        num,steps=0,1
+        target=abs(target)
+        while num<target or (num>target and (num-target)%2):
+            num+=steps
+            steps+=1
+        return steps-1
