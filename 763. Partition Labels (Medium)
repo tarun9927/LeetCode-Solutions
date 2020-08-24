@@ -1,0 +1,19 @@
+class Solution:
+    def partitionLabels(self, S: str) -> List[int]:
+        seen,last,ans,l=set(),{},[],None
+        for i in range(len(S)):
+            if S[i] not in last: last[S[i]]=[i,i]
+            else: last[S[i]][1]=i
+        for i in range(len(S)):
+            if S[i] in seen: continue
+            seen.add(S[i])
+            if l==None:
+                l=last[S[i]][1]
+                ans.append(last[S[i]][1])
+            elif last[S[i]][0]>l:
+                l=last[S[i]][1]
+                ans.append(last[S[i]][1])
+            elif last[S[i]][0]<l and last[S[i]][1]>l:
+                l=last[S[i]][1]
+                ans[-1]=last[S[i]][1]
+        return [ans[0]+1]+[(ans[i+1]-ans[i]) for i in range(len(ans)-1)]
