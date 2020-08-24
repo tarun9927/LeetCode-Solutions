@@ -1,0 +1,23 @@
+class Solution:
+    def pyramidTransition(self, bottom: str, allowed: List[str]) -> bool:
+        mapp=collections.defaultdict(set)
+        for x in allowed:
+            mapp[x[:2]].add(x[-1])
+            
+        def dfs(current):
+            if len(current)==1:
+                return True
+            next=find_all_next(current)
+            return any(dfs(x) for x in next)
+        
+        def find_all_next(current):
+            next=[""]
+            for i in range(len(current)-1):
+                temp=set()
+                for x in mapp[current[i:i+2]]:
+                    for j in next:
+                        temp.add(j+x)
+                next=list(temp)
+            return next
+        return dfs(bottom)
+                    
