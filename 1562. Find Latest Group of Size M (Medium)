@@ -1,0 +1,15 @@
+class Solution:
+    def findLatestStep(self, arr: List[int], m: int) -> int:
+        n=len(arr)
+        lengths,counts=[0]*(n+2),[0]*(n+1)
+        ans=-1
+        for i,index in enumerate(arr):
+            left,right=lengths[index-1],lengths[index+1]
+            new_len=left+right+1
+            lengths[index-left]=lengths[index+right]=lengths[index]=new_len
+            counts[left]-=1
+            counts[right]-=1
+            counts[new_len]+=1
+            if counts[m]>0:
+                ans=i+1
+        return ans
