@@ -1,0 +1,16 @@
+class Solution:
+    def orderOfLargestPlusSign(self, N: int, mines: List[List[int]]) -> int:
+        grid=[[N]*N for _ in range(N)]
+        for i,j in mines:grid[i][j]=0
+        for i in range(N):
+            l,r,u,d=0,0,0,0
+            for j,k in zip(range(N),reversed(range(N))):
+                l=l+1 if grid[i][j] else 0
+                grid[i][j]=min(grid[i][j],l)
+                r=r+1 if grid[i][k] else 0
+                grid[i][k]=min(grid[i][k],r)
+                u=u+1 if grid[j][i] else 0
+                grid[j][i]=min(grid[j][i],u)
+                d=d+1 if grid[k][i] else 0
+                grid[k][i]=min(grid[k][i],d)
+        return max(max(i) for i in grid)
