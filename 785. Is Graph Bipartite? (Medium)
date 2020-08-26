@@ -1,0 +1,20 @@
+class Solution:
+    def isBipartite(self, edges: List[List[int]]) -> bool:
+        graph,color=collections.defaultdict(set),{i:-1 for i in range(len(edges))}
+        for u in range(len(edges)):
+            graph[u]|=set(edges[u])
+        def bfs(u):
+            queue=[u]
+            color[u]=True
+            while queue:
+                u=queue.pop(0)
+                current_col=color[u]
+                for v in graph[u]:
+                    if color[v]==current_col: return False
+                    elif color[v]==-1 and color[v]!=current_col:
+                        color[v]=not current_col
+                        queue.append(v)
+            return True
+        for i in range(len(edges)):
+            if color[i]==-1 and not bfs(i): return False
+        return True
