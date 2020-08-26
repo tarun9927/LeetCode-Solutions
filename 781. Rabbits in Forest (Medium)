@@ -1,0 +1,14 @@
+class Solution:
+    def numRabbits(self, answers: List[int]) -> int:
+        counts,ans=collections.defaultdict(int),0
+        for i in answers:
+            if counts[i]==0:
+                ans+=i+1
+                counts[i]+=1
+            else:
+                if counts[i]<i+1:
+                    counts[i]+=1
+                else:
+                    ans+=i+1
+                    counts[i]=1
+        return ans
