@@ -1,0 +1,7 @@
+class Solution:
+    def isIdealPermutation(self, A: List[int]) -> bool:
+        maxx=float("-inf")
+        for i in range(len(A)-2):
+            maxx=max(A[i],maxx)
+            if maxx>A[i+2]: return False
+        return True
