@@ -1,23 +1,20 @@
 class Solution:
     def mincostTickets(self, days: List[int], costs: List[int]) -> int:
-        dp,days_a=[0 for _ in range(days[-1]+1)],[]
-        i,j,n=0,0,len(days)
-        while i<n:
-            while j<days[i]:
-                days_a.append(False)
-                j+=1
-            days_a.append(True)
-            j=days[i]+1
-            i+=1
-        for i in range(1,days[-1]+1):
-            if not days_a[i]:
-                dp[i]=dp[i-1]
-            else:
-                od,ow,om=dp[i-1]+costs[0],costs[1],costs[2]
-                if i-7>=0:
-                    ow+=max(dp[i-7],0)
-                if i-30>=0:
-                    om+=max(dp[i-30],0)
-                dp[i]=min(od,ow,om)
-        return dp[-1]
-                
+        n,seen=len(days),{}
+        def find_min(day):
+            if day>=n:
+                return 0
+            if day in seen:
+                return seen[day]
+            seven,thirty=n,n
+            for i in range(day,n):
+                if days[day]+7<=days[i]:
+                    seven=i
+                    break
+            for i in range(day,n):
+                if days[day]+30<=days[i]:
+                    thirty=i
+                    break
+            seen[day]=min(find_min(day+1)+costs[0],find_min(seven)+costs[1],find_min(thirty)+costs[2])
+            return seen[day]
+        return find_min(0)
