@@ -1,0 +1,27 @@
+class Solution:
+    def numTilings(self, N: int) -> int:
+        seen={}
+        def make_state(one,two):
+            state=0
+            if one: state|=1
+            if two: state|=2
+            return state
+        def find_all(i,one,two):
+            if i==N:
+                return 1
+            state=make_state(one,two)
+            if (i,state) in seen:
+                return seen[i,state]
+            three,four=i+1<N,i+1<N
+            count=0
+            if one and two and three: count+=find_all(i+1,False,True)
+            if one and two and four: count+=find_all(i+1,True,False)
+            if one and two: count+=find_all(i+1,True,True)
+            if one and not two and three and four: count+=find_all(i+2,True,True)
+            if not one and two and three and four: count+=find_all(i+2,True,True)
+            if not one and two and four: count+=find_all(i+1,True,False)
+            if one and not two and three: count+=find_all(i+1,False,True)
+            if one and two and three and four: count+=find_all(i+2,True,True)
+            seen[i,state]=count
+            return count
+        return find_all(0,True,True)%1000000007
