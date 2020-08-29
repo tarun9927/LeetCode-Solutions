@@ -1,0 +1,6 @@
+class Solution:
+    def customSortString(self, S: str, T: str) -> str:
+        pos=collections.defaultdict(int)
+        for i,s in enumerate(S):
+            pos[s]=i+1
+        return "".join(sorted(T,key= lambda x:pos[x]))
