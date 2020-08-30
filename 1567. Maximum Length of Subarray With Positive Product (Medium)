@@ -1,3 +1,4 @@
+#### Solution 1 ####
 class Solution:
     def getMaxLen(self, nums: List[int]) -> int:
         n,ans=len(nums),0
@@ -42,4 +43,17 @@ class Solution:
                 elif zeros[i][3]%2==0:
                     ans=max(ans,zeros[i][1]-i)
             if ans==n: break
+        return ans
+        
+#### Solution 2 ####
+class Solution:
+    def getMaxLen(self, nums: List[int]) -> int:
+        start,first_neg,ans,nc=-1,-1,0,0
+        for i in range(len(nums)):
+            if nums[i]<0:
+                nc+=1
+                if first_neg==-1: first_neg=i
+            elif nums[i]==0:
+                start,first_neg,nc=i,-1,0
+            ans=max(ans,i-start if nc%2==0 else i-first_neg)
         return ans
