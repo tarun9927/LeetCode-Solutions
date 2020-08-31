@@ -1,0 +1,14 @@
+class Solution:
+    def numMatchingSubseq(self, S: str, words: List[str]) -> int:
+        remaining_words,ans=collections.defaultdict(list),0
+        for word in words:
+            remaining_words[word[0]].append(word)
+        for letter in S:
+            words_rem=remaining_words[letter]
+            remaining_words[letter]=[]
+            for word in words_rem:
+                if len(word)==1:
+                    ans+=1
+                else:
+                    remaining_words[word[1]].append(word[1:])
+        return ans
