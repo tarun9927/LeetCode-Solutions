@@ -1,0 +1,20 @@
+class Solution:
+    def eventualSafeNodes(self, graph: List[List[int]]) -> List[int]:
+        n=len(graph)
+        def in_cycle(i):
+            if vis[i]==1:
+                return True
+            if vis[i]==0:
+                return False
+            vis[i]=1
+            for v in graph[i]:
+                if in_cycle(v):
+                    return True
+            vis[i]=0
+            return False
+        vis=[-1 for _ in range(n)]
+        ans=[]
+        for i in range(n):
+            if not in_cycle(i):
+                ans.append(i)
+        return ans
