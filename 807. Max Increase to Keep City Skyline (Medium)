@@ -1,0 +1,14 @@
+class Solution:
+    def maxIncreaseKeepingSkyline(self, grid: List[List[int]]) -> int:
+        if not grid: return 0
+        n,m,ans=len(grid),len(grid[0]),0
+        tb,lr=[float("-inf")]*m,[float("-inf")]*n
+        for i in range(n):
+            for j in range(m):
+                tb[j]=max(tb[j],grid[i][j])
+                lr[i]=max(lr[i],grid[i][j])
+        for i in range(n):
+            for j in range(m):
+                lim=min(tb[j],lr[i])
+                ans+=lim-grid[i][j] if lim>grid[i][j] else 0
+        return ans
