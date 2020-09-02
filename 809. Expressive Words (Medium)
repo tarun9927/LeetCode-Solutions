@@ -1,0 +1,24 @@
+class Solution:
+    def expressiveWords(self, S: str, words: List[str]) -> int:
+        def is_possible(word,S):
+            i,j=0,0
+            n,m=len(word),len(S)
+            while i<n and j<m:
+                cw,cs=word[i],S[j]
+                if cw!=cs: return False
+                count1,count2=0,0
+                while i<n and word[i]==cw:
+                    count1+=1
+                    i+=1
+                while j<m and S[j]==cs:
+                    count2+=1
+                    j+=1
+                if count1>count2: return False
+                if count2<=2 and count2!=count1: return False
+            return i==n and j==m
+        ans=0
+        for word in words:
+            if is_possible(word,S):
+                ans+=1
+        return ans
+                    
