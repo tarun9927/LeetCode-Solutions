@@ -1,0 +1,20 @@
+class Solution:
+    def largestSumOfAverages(self, A: List[int], K: int) -> float:
+        seen,n={},len(A)
+        def find_max(ind,k):
+            if k==1:
+                return sum(A[ind+1:])/(n-(ind+1)) if n-(ind+1)!=0 else float("-inf")
+            if ind==n-1:
+                return float("-inf")
+            if (ind,k) in seen:
+                return seen[ind,k]
+            summ,lenn=0,0
+            temp=float("-inf")
+            for i in range(ind+1,n-1):
+                summ+=A[i]
+                lenn+=1
+                temp=max(temp,find_max(i,k-1)+(summ/lenn))
+            seen[ind,k]=temp
+            return temp
+        if not A or not K: return 0
+        return find_max(-1,K)
