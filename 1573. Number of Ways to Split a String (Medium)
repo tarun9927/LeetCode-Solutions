@@ -1,0 +1,20 @@
+class Solution:
+    def numWays(self, s: str) -> int:
+        n=len(s)
+        lcount,rcount,total=[0]*n,[0]*n,0
+        for i in range(n):
+            if i>0:
+                lcount[i]+=lcount[i-1]
+            if s[i]=="1":
+                lcount[i]+=1
+                total+=1
+        if total%3: return 0
+        ans=0
+        for i in range(n-1,-1,-1):
+            if i<n-1:
+                rcount[i]+=rcount[i+1]
+            if s[i]=="1":
+                rcount[i]+=1
+            if rcount[i]==(total//3):
+                ans+=1
+        return (ans*lcount.count(total//3) if total!=0 else sum(range(1,n-1)))%1000000007
