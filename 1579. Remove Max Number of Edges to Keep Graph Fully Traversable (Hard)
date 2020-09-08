@@ -1,0 +1,36 @@
+class Solution:
+    def maxNumEdgesToRemove(self, n: int, edges: List[List[int]]) -> int:
+        def have_same_parent(u,v):
+            parent_u,parent_v=find_parent(u),find_parent(v)
+            if parent_u==parent_v: return True
+            parent[parent_v]=u
+            return False
+        
+        def find_parent(node):
+            if parent[node]!=node:
+                parent[node]=find_parent(parent[node])
+            return parent[node]
+        parent=[i for i in range(n+1)]
+        tbra=tbrb=ans=0
+        for edge in edges:
+            if edge[0]==3:
+                if not have_same_parent(edge[1],edge[2]):
+                    tbra+=1
+                    tbrb+=1
+                else:
+                    ans+=1
+        temp=parent[:]
+        for edge in edges:
+            if edge[0]==2:
+                if not have_same_parent(edge[1],edge[2]):
+                    tbrb+=1
+                else:
+                    ans+=1
+        parent=temp
+        for edge in edges:
+            if edge[0]==1:
+                if not have_same_parent(edge[1],edge[2]):
+                    tbra+=1
+                else:
+                    ans+=1
+        return ans if tbrb==tbra==n-1 else -1
