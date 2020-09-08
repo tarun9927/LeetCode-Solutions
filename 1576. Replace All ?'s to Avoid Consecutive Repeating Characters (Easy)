@@ -1,0 +1,18 @@
+class Solution:
+    def modifyString(self, s: str) -> str:
+        s=list(s)
+        for i in range(len(s)):
+            if s[i]=="?":
+                l,r=96,96
+                if i-1>=0:
+                    l=ord(s[i-1])
+                if i+1<len(s) and s[i+1]!="?":
+                    r=ord(s[i+1])
+                print(l,r)
+                choices=[]
+                for j in range(97,123):
+                    if j!=l and j!=r:
+                        choices.append(j)
+                a=random.choice(choices)
+                s[i]=chr(a)
+        return "".join(s)
