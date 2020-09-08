@@ -1,0 +1,12 @@
+class Solution:
+    def numTriplets(self, nums1: List[int], nums2: List[int]) -> int:
+        seen1,seen2=collections.defaultdict(int),collections.defaultdict(int)
+        n,m=len(nums1),len(nums2)
+        for j in range(m):
+            for temp in range(j+1,m):
+                seen2[nums2[j]*nums2[temp]]+=1
+        for j in range(n):
+            for temp in range(j+1,n):
+                seen1[nums1[j]*nums1[temp]]+=1
+        return sum(seen1[i*i] for i in nums2)+sum(seen2[i*i] for i in nums1)
+                
