@@ -1,0 +1,19 @@
+class Solution:
+    def numDistinct(self, s: str, t: str) -> int:
+        def find_max(ind,curr):
+            if ind==len(s) or curr==len(t):
+                return 1 if curr==len(t) else 0
+            if (ind,curr) in seen:
+                return seen[ind,curr]
+            temp=0
+            for i in range(ind,len(s)):
+                if s[i]==t[curr]:
+                    temp+=find_max(i+1,curr+1)
+            seen[ind,curr]=temp
+            return temp
+        seen={}
+        if not t or not s:
+            if not t and not s:return 1
+            if not s: return 0
+            if not t: return 1
+        return sum(find_max(j+1,1) for j in range(len(s)) if s[j]==t[0] and len(s)-j>=len(t))
