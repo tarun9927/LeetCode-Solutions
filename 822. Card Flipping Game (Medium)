@@ -1,0 +1,14 @@
+class Solution:
+    def flipgame(self, fronts: List[int], backs: List[int]) -> int:
+        discarded,prob=set(),{}
+        for i in range(len(fronts)):
+            if fronts[i]==backs[i]:
+                discarded.add(fronts[i])
+                if fronts[i] in prob:
+                    del prob[fronts[i]]
+                continue
+            if fronts[i] not in discarded:
+                prob[fronts[i]]=i+1
+            if backs[i] not in discarded:
+                prob[backs[i]]=i+1
+        return 0 if not prob else min(prob.keys())
