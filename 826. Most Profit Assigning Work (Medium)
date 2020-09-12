@@ -1,0 +1,12 @@
+class Solution:
+    def maxProfitAssignment(self, difficulty: List[int], profit: List[int], worker: List[int]) -> int:
+        n=len(profit)
+        difficulty,worker=sorted([(difficulty[i],i) for i in range(n)],key=lambda x : x[0]),sorted(worker)
+        d_ind=-1
+        tba,ans=0,0
+        for i in worker:
+            while d_ind+1<n and difficulty[d_ind+1][0]<=i:
+                tba=max(tba,profit[difficulty[d_ind+1][1]])
+                d_ind+=1
+            ans+=tba
+        return ans
