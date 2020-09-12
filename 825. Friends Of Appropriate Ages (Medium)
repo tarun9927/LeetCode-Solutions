@@ -1,0 +1,10 @@
+class Solution:
+    def numFriendRequests(self, ages: List[int]) -> int:
+        ans,ages=0,collections.Counter(ages)
+        for A in ages:
+            for B in ages:
+                if B <= 0.5 * A + 7: continue
+                if B > A: continue
+                ans+=ages[A]*ages[B]
+                if A==B: ans-=ages[B]
+        return ans
