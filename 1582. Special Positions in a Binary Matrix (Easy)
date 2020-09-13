@@ -1,0 +1,14 @@
+class Solution:
+    def numSpecial(self, mat: List[List[int]]) -> int:
+        n,m,ans=len(mat),len(mat[0]),0
+        def is_spe(i,j):
+            for u in range(n):
+                if i!=u and mat[u][j]:return False
+            for u in range(m):
+                if j!=u and mat[i][u]:return False
+            return True
+        for i in range(n):
+            for j in range(m):
+                if mat[i][j] and is_spe(i,j):
+                    ans+=1
+        return ans
