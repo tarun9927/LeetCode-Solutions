@@ -1,0 +1,22 @@
+class Solution:
+    def unhappyFriends(self, N: int, prefer: List[List[int]], pairs: List[List[int]]) -> int:
+        graph,pref,ans=collections.defaultdict(int),{i:[0 for _ in range(N)] for i in range(N)},0
+        for x,y in pairs:
+            graph[x]=y
+            graph[y]=x
+        for i in range(len(prefer)):
+            k=N
+            for j in range(N-1):
+                pref[i][prefer[i][j]]=k
+                k-=1
+        for i in range(N):
+            is_happy=True
+            for j in range(N):
+                if i==j:continue
+                if pref[i][j]>pref[i][graph[i]] and pref[j][i]>pref[j][graph[j]]:
+                    is_happy=False
+                    break
+            if not is_happy:
+                ans+=1
+        return ans
+        
