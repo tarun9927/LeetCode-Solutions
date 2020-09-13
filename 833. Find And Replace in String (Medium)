@@ -1,0 +1,10 @@
+class Solution:
+    def findReplaceString(self, S: str, indexes: List[int], sources: List[str], targets: List[str]) -> str:
+        indexes=sorted([(indexes[i],sources[i],targets[i]) for i in range(len(indexes))], key=lambda x: x[0])
+        extra,S=0,list(S)
+        for i in range(len(indexes)):
+            start,end=indexes[i][0]+extra,indexes[i][0]+extra+len(indexes[i][1])
+            if "".join(S[start:end])==indexes[i][1]:
+                S[start:end]=list(indexes[i][2])
+                extra+=len(indexes[i][2])-len(indexes[i][1])
+        return "".join(S)
