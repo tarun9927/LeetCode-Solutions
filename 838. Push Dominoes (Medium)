@@ -1,0 +1,27 @@
+class Solution:
+    def pushDominoes(self, dom: str) -> str:
+        prev,l,r,n,ans=0,0,-1,len(dom),""
+        while l<n and dom[l]==".":
+            l+=1
+        if l>=n: return dom
+        ans="."*l if dom[l]=="R" else "L"*l
+        while True:
+            r=l+1
+            while r<n and dom[r]==".":
+                r+=1
+            ans+=dom[l]
+            if r>=n: break
+            if dom[l]=="R" and dom[r]=="L":
+                temp=((r-l)-1)//2
+                ans+="R"*temp
+                if ((r-l)-1)%2: ans+="." 
+                ans+="L"*temp
+            elif dom[l]=="R":
+                ans+="R"*((r-l)-1)
+            elif dom[r]=="L":
+                ans+="L"*((r-l)-1)
+            else:
+                ans+="."*((r-l)-1)
+            prev,l=l,r
+        ans+="."*((n-l)-1) if dom[l]!="R" else "R"*((n-l)-1)
+        return ans
