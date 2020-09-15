@@ -1,0 +1,13 @@
+class Solution:
+    def isTransformable(self, s: str, t: str) -> bool:
+        n,indexes,pos=len(t),collections.defaultdict(list),[0 for _ in range(10)]
+        for i in range(n):
+            indexes[int(s[i])].append(i)
+        for char in t:
+            num=int(char)
+            if pos[num]>=len(indexes[num]): return False
+            for n in range(num):
+                if pos[n]<len(indexes[n]) and indexes[n][pos[n]]<indexes[num][pos[num]]:
+                    return False
+            pos[num]+=1
+        return True
