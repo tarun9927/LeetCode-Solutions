@@ -1,0 +1,12 @@
+class Solution:
+    def canVisitAllRooms(self, rooms: List[List[int]]) -> bool:
+        queue,vis,n=[0],set(),0
+        while queue:
+            curr=queue.pop(0)
+            if curr in vis: continue
+            vis.add(curr)
+            n+=1
+            for next in rooms[curr]:
+                if next in vis: continue
+                queue.append(next)
+        return n==len(rooms)
