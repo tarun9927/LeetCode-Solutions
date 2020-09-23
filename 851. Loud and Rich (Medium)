@@ -1,0 +1,19 @@
+class Solution:
+    def loudAndRich(self, richer: List[List[int]], quiet: List[int]) -> List[int]:
+        graph=collections.defaultdict(list)
+        for x,y in richer:
+            graph[y].append(x)
+        seen={}
+        def dfs(current):
+            if not graph[current]:
+                return current
+            if current in seen:
+                return seen[current]
+            ans=current
+            for nex in graph[current]:
+                temp=dfs(nex)
+                if quiet[ans]>quiet[temp]:
+                    ans=temp
+            seen[current]=ans
+            return ans
+        return [dfs(i) for i in range(len(quiet))]
