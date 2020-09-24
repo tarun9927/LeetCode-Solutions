@@ -1,0 +1,38 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def distanceK(self, root: TreeNode, target: TreeNode, K: int) -> List[int]:
+        parent={}
+        self.ans=set()
+        def traverse(node,curr,dis):
+            if node:
+                if curr==dis:
+                    self.ans.add(node.val)
+                else:
+                    traverse(node.left,curr+1,dis)
+                    traverse(node.right,curr+1,dis)
+        def find_parent(node,par,isleft):
+            if node:
+                parent[node]=[par,isleft]
+                if node!=target:
+                    find_parent(node.left,node,True)
+                    find_parent(node.right,node,False)
+        def find_(node,dis,isleft):
+            if dis>0 and node:
+                if isleft:
+                    traverse(node.right,0,dis-1)
+                else:
+                    traverse(node.left,0,dis-1)
+                if node in parent:
+                    find_(parent[node][0],dis-1,parent[node][1])
+            elif dis==0 and node:
+                self.ans.add(node.val)
+        find_parent(root,None,None)
+        traverse(target,0,K)
+        if target in parent: find_(parent[target][0],K-1,parent[target][1])
+        return list(self.ans)
