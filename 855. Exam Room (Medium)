@@ -1,0 +1,28 @@
+class ExamRoom:
+
+    def __init__(self, N: int):
+        self.N=N
+        self.occ=[]
+
+    def seat(self) -> int:
+        if not self.occ:
+            ans=0
+        else:
+            dis,ans=self.occ[0],0
+            for i in range(len(self.occ)):
+                if not i+1<len(self.occ): continue
+                a,b=self.occ[i],self.occ[i+1]
+                if (b-a)//2>dis:
+                    dis=(b-a)//2
+                    ans=(a+b)//2
+            if (self.N-1)-self.occ[-1]> dis: ans=self.N-1
+        bisect.insort(self.occ,ans)
+        return ans
+
+    def leave(self, p: int) -> None:
+        self.occ.remove(p)
+
+# Your ExamRoom object will be instantiated and called as such:
+# obj = ExamRoom(N)
+# param_1 = obj.seat()
+# obj.leave(p)
