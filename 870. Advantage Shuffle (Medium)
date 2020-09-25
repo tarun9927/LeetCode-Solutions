@@ -1,0 +1,11 @@
+class Solution:
+    def advantageCount(self, A: List[int], B: List[int]) -> List[int]:
+        n,A,B=len(A),sorted(A),sorted([(B[i],i) for i in range(len(B))],key=lambda x: x[0])
+        ans=[-1]*n
+        while B:
+            element,ind=B.pop()
+            if A[-1]>element:
+                ans[ind]=A.pop()
+            else:
+                ans[ind]=A.pop(0)
+        return ans
