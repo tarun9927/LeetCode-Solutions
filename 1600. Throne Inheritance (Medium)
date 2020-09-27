@@ -1,0 +1,28 @@
+class ThroneInheritance:
+
+    def __init__(self, kingName: str):
+        self.mems=collections.defaultdict(list)
+        self.king=kingName
+        self.alive=collections.defaultdict(bool)
+        self.alive[kingName]=True
+
+    def birth(self, parentName: str, childName: str) -> None:
+        self.mems[parentName].append(childName)
+        self.alive[childName]=True
+
+    def death(self, name: str) -> None:
+        self.alive[name]=False
+
+    def getInheritanceOrder(self) -> List[str]:
+        return [i for i in self.dfs(self.king) if self.alive[i]]
+        
+    def dfs(self,curr):
+        ans=[curr]
+        for child in self.mems[curr]:
+            ans.extend(self.dfs(child))
+        return ans
+# Your ThroneInheritance object will be instantiated and called as such:
+# obj = ThroneInheritance(kingName)
+# obj.birth(parentName,childName)
+# obj.death(name)
+# param_3 = obj.getInheritanceOrder()
