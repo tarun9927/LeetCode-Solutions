@@ -1,0 +1,27 @@
+class Solution:
+    def maximumRequests(self, n: int, requests: List[List[int]]) -> int:
+        i,o=[0]*n,[0]*n
+        l=n
+        n=len(requests)
+        seen={}
+        def find_max(ind,used,inn,out):
+            if ind==n:
+                for i in range(l):
+                    if inn[i]!=out[i]:
+                        return 0
+                return used
+            key=(ind,used,tuple(inn),tuple(out))
+            if key in seen:
+                return seen[key]
+            ans=0
+            s,d=requests[ind][0],requests[ind][1]
+            if s!=d:
+                ans=max(ans,find_max(ind+1,used,inn,out))
+            inn[d]+=1
+            out[s]+=1
+            ans=max(ans,find_max(ind+1,used+1,inn,out))
+            inn[d]-=1
+            out[s]-=1
+            seen[key]=ans
+            return ans
+        return find_max(0,0,i,o)
