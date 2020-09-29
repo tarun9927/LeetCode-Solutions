@@ -1,0 +1,17 @@
+class Solution:
+    def decodeAtIndex(self, S: str, K: int) -> str:
+        l=0
+        for ind,i in enumerate(S):
+            if not i.isdigit():
+                l+=1
+            else:
+                l*=int(i)
+            if l>=K: break
+        for i in range(ind,-1,-1):
+            if S[i].isdigit():
+                l//=int(S[i])
+                K%=l
+            else:
+                if K==0 or K==l:
+                    return S[i]
+                l-=1
