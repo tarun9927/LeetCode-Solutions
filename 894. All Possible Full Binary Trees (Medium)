@@ -1,0 +1,25 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def allPossibleFBT(self, N: int) -> List[TreeNode]:
+        def is_possible(left):
+            left-=1
+            if left==0:
+                return [TreeNode(0)]
+            if left in seen:
+                return seen[left]
+            ans=[]
+            for i in range(1,left,2):
+                for l in is_possible(i):
+                    for r in is_possible(left-i):
+                        root=TreeNode(0)
+                        root.left,root.right=l,r
+                        ans.append(root)
+            seen[left]=ans
+            return ans
+        seen={}
+        return is_possible(N)
