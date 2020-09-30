@@ -1,0 +1,16 @@
+class Solution:
+    def numTrees(self, n: int) -> int:
+        seen={}
+        def dfs(nums):
+            if not nums:
+                return 1
+            key=tuple(nums)
+            if key in seen:
+                return seen[key]
+            ans=0
+            for i in range(len(nums)):
+                l,r=dfs(nums[:i]),dfs(nums[i+1:])
+                ans+=l*r if l and r else 0
+            seen[key]=ans
+            return ans
+        return dfs([i+1 for i in range(n)])
