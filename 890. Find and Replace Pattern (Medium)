@@ -1,0 +1,15 @@
+class Solution:
+    def findAndReplacePattern(self, words: List[str], pattern: str) -> List[str]:
+        inds,ans={i:pattern[i] for i in range(len(pattern))},[]
+        for word in words:
+            seen={}
+            mapped=set()
+            for i,letter in enumerate(word):
+                if letter not in seen:
+                    if pattern[i] in mapped: break
+                    seen[letter]=pattern[i]
+                    mapped.add(pattern[i])
+                if seen[letter]!=inds[i]: break
+            else:
+                ans.append(word)
+        return ans
