@@ -1,0 +1,39 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def generateTrees(self, n: int) -> List[TreeNode]:
+        def create_tree(nums):
+            if not nums:
+                return []
+            key=tuple(nums)
+            if key in seen:
+                return seen[key]
+            ans=[]
+            for i in range(len(nums)):
+                l,r=create_tree(nums[:i]),create_tree(nums[i+1:])
+                if not l and not r:
+                    ans.append(TreeNode(nums[i]))
+                elif not l:
+                    for rc in r:
+                        root=TreeNode(nums[i])
+                        root.right=rc
+                        ans.append(root)
+                if not r:
+                    for lc in l:
+                        root=TreeNode(nums[i])
+                        root.left=lc
+                        ans.append(root)
+                else:
+                    for lc in l:
+                        for rc in r:
+                            root=TreeNode(nums[i])
+                            root.left,root.right=lc,rc
+                            ans.append(root)
+            seen[key]=ans
+            return ans
+        seen={}
+        return create_tree([i+1 for i in range(n)])
