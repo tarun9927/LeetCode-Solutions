@@ -1,0 +1,12 @@
+class Solution:
+    def minimumOneBitOperations(self, n: int) -> int:
+        bina=bin(n)[2:]
+        n=len(bina)
+        sign=1
+        ans=0
+        for i in range(n):
+            digit=int(bina[i])
+            if not digit: continue
+            ans+=(((2**(n-(i+1)))*2)-1)*sign
+            sign*=-1
+        return ans
