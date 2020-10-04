@@ -1,0 +1,32 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isEvenOddTree(self, root: TreeNode) -> bool:
+        lvls={}
+        def traverse(root,lvl):
+            if root:
+                if lvl not in lvls:
+                    lvls[lvl]=[]
+                lvls[lvl].append(root.val)
+                traverse(root.left,lvl+1)
+                traverse(root.right,lvl+1)
+        traverse(root,1)
+        for i in lvls:
+            if i%2:
+                prev=float("-inf")
+                for num in lvls[i]:
+                    if not num%2 or num<=prev:
+                        return False
+                    prev=num
+            else:
+                prev=float("inf")
+                for num in lvls[i]:
+                    if num%2 or num>=prev:
+                        return False
+                    prev=num
+        return True
+                    
